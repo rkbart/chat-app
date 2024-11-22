@@ -3,15 +3,19 @@
 
 /* Login form styling */
 .login_form {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    
     width: 100%;
-    /* max-width: 435px; */
-    background: whitesmoke;
-    /* border-radius: 15px; */
+    max-width: 450px;
     padding: 41px 30px;
-    /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); */
+    margin-top: 20px;
+   
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
 }
 
 .login_form h3 {
