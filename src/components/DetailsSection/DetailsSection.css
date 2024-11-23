@@ -1,0 +1,11 @@
+.details-section {
+    width: 20%;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    padding: 16px;
+    /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); */
+    height: 95vh;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  

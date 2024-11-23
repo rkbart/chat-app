@@ -1,0 +1,13 @@
+
+#icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.add-channel-icon {
+   cursor: pointer;
+   margin-right: 5px;
+   margin-top: 5px;
+}
+

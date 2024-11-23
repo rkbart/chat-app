@@ -16,7 +16,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--background-color);
-  color: var(--text-color);
+    color: var(--text-color);
 }
 
 code {
@@ -25,29 +25,14 @@ code {
 }
 
 :root {
-  /* Background and Base Colors */
-  --background-color: #FAF3E0; /* Soft Beige */
-  --card-background: #FFFBEA; /* Slightly darker for cards */
-  --border-color: #EDE7D9; /* Light neutral for borders */
-
-  /* Primary and Secondary Colors */
-  --primary-color: #A5D6A7; /* Sage Green */
-  --secondary-color: #81D4FA; /* Pale Blue */
-  --highlight-color: #FFE082; /* Light Yellow for highlights */
-
-  /* Text Colors */
-  --text-color: #4E342E; /* Dark Brown for primary text */
-  --secondary-text-color: #6D4C41; /* Softer Brown for secondary text */
-
-  /* Status Indicators */
-  --success-color: #8BC34A; /* Olive Green for online status */
-  --error-color: #D84315; /* Brick Red for errors or alerts */
-
-  /* Chat Bubbles */
-  --bubble-sender: #FFFBEA; /* Light neutral for outgoing messages */
-  --bubble-receiver: #E3F2FD; /* Soft Blue for incoming messages */
-
-  /* Shadows and Effects */
-  --box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  --background-color: #f4f4f4;
+  --sidebar-bg: #81d4fa;
+  --text-color: #4e342e;
+  --secondary-bg: #ffe082;
+  --bubble-sender: #fffbea;
+  --bubble-receiver: #e3f2fd;
+  --card-bg: #ffffff;
+  --success-color: #8bc34a;
+  --border-color: #ddd;
 }
 
