@@ -7,5 +7,18 @@
     height: 95vh;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
   }
   
+#logo {
+  width: 120px;
+  margin-top: 15px;
+}
+
+.details-section p {
+  text-align: center;
+  margin-top: 10px;
+}

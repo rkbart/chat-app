@@ -15,10 +15,33 @@
     align-items: center;
   }
   
+  
+  .status {
+    color: var(--success-color)
+  }
+  
+  .status-online {
+    color: var(--success-color)
+  }
+
+  .status-offline {
+    color: red;
+  }
+
   .chat-messages {
     flex: 1;
     padding: 16px;
     overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 24px;
+    flex-direction: column;
+  }
+
+  #select-room-img {
+    width: 300px;
+    height: auto;
   }
   
   .chat-bubble {

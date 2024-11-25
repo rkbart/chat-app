@@ -1,13 +1,32 @@
 
 #icon {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 8px;
 }
+.list-holder {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+}
 .add-channel-icon {
    cursor: pointer;
-   margin-right: 5px;
-   margin-top: 5px;
+   margin-left: 5px;
+   margin-top: 7px;
 }
+.remove-channel-icon {
+    /* display: none; */
+    cursor: pointer;
+    margin-top: 3px;
+    margin-right: 5px;
+    color: hsla(0, 0%, 50%, 0.0);
+}
+
+.remove-channel-icon:hover {
+    transition: color 0.3s ease;
+    color: hsla(0, 0%, 50%, 0.7);
+}
+ 
+
 
