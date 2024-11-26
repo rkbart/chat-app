@@ -1,29 +1,47 @@
 import { useState } from "react";
-// import Login from "./components/Auth/Login/Login.jsx";
-import Main from "./components/Main/Main.jsx";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from "./Pages/Login/Login.jsx";
+import Main from "./Pages/Main/Main.jsx";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import DataProvider from "./context/DataProvider.jsx";
 
 
 function App() {
-   
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    return (
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
+  return (
+    <DataProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Main/>}>
+          {/* <Route path="/login" 
+                 element={<Login 
+                            onLogin={handleLogin}/>}/>  */}
+          <Route path="/main" 
+                 element={<Main/>}/> 
+          <Route
+            path="/main"
+            element={
+              isAuthenticated ? (
+                <Main onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" />
+                ) 
+              } 
+            />
             {/* <Route index element={</>}></Route> */}
             {/* <Route path="" element={</>}></Route> */}
             {/* <Route path='*' element={<NotFound />} /> */}
-          </Route>
         </Routes>
       </BrowserRouter>
-      // <div className="App">
-        // {/* <Login></Login> */}
-        // <Main />
-
-      // </div>
-        
-    );
+    </DataProvider>
+  );
 }
 
 export default App;

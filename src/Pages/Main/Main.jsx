@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import Sidebar from "../SideBar/Sidebar.jsx";
-import ChatWindow from "../Chat/ChatWindow/ChatWindow.jsx";
-import DetailsSection from "../DetailsSection/DetailsSection.jsx";
+import Sidebar from "../../components/SideBar/Sidebar.jsx";
+import ChatWindow from "../../components/Chat/ChatWindow/ChatWindow.jsx";
+import DetailsSection from "../../components/DetailsSection/DetailsSection.jsx";
 import "./Main.css";
 
 function Main() {

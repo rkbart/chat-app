@@ -7,7 +7,7 @@ function ChatWindow({chatRoom}) {
     <div className="chat-window">
       <header className="chat-header">
         <h2>#{chatRoom}</h2>
-        <span className="status">Online</span>
+        <span className="status"><span className="online-status-circle"></span>Online</span>
       </header>
       <section className="chat-messages">
         {/* <div className="chat-bubble sender">Hello! How are you?</div>

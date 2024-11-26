@@ -17,16 +17,35 @@
   
   
   .status {
-    color: var(--success-color)
+    color: var(--success-color);
+    user-select: none;
   }
-  
+
   .status-online {
     color: var(--success-color)
   }
-
+  .online-status-circle {
+    width: 10px;
+    height: 10px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
   .status-offline {
     color: red;
   }
+
+  .offline-status-circle {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
 
   .chat-messages {
     flex: 1;

@@ -126,6 +126,7 @@ form .input_box {
 }
 
 a {
+    margin-left: 5px;
     text-decoration: none;
     color: #b2005e;
     font-weight: 500;
