@@ -8,7 +8,7 @@
 .list-holder {
     display: flex;
     justify-content: space-between;
-    padding-left: 50px;
+    padding-left: 30px;
 }
 .add-channel-icon {
    cursor: pointer;
@@ -16,7 +16,6 @@
    margin-top: 7px;
 }
 .remove-channel-icon {
-    /* display: none; */
     cursor: pointer;
     margin-top: 3px;
     margin-right: 5px;

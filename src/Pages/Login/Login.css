@@ -12,9 +12,9 @@
     padding: 41px 30px;
     margin-top: 20px;
    
-    background-color: var(--card-background);
+    background-color: hsl(0, 0%, 17%);
     border: 1px solid var(--border-color);
-    box-shadow: var(--box-shadow);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
 }
 
@@ -74,7 +74,7 @@
 
 /* Login option separator styling */
 .login_form .separator span {
-    background: whitesmoke;
+    background: hsl(0, 0%, 17%);
     z-index: 1;
     padding: 0 10px;
     position: relative;
@@ -104,15 +104,16 @@ form .input_box input {
     border: 1px solid #DADAF2;
     border-radius: 15px;
     outline: none;
-    background: #F8F8FB;
+    background-color: gray;
     font-size: 17px;
     padding: 0px 20px;
     margin-bottom: 25px;
     transition: 0.2s ease;
+    color: white
 }
 
 form .input_box input:focus {
-    border-color: #626cd6;
+    border-color:black;
 }
 
 form .input_box .password_title {

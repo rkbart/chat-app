@@ -2,20 +2,15 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #f4f4f4;
-    height: 95vh;
-  }
-  
-  .chat-header {
-    padding: 16px;
-    background-color: #ffffff;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
+    background-color:  #23252f;
+    height: 100%;
     align-items: center;
+    /* padding: 10px; */
+    border-radius: 15px;
+    width: 100%;
+    padding: 16px;
   }
-  
-  
+    
   .status {
     color: var(--success-color);
     user-select: none;
@@ -49,13 +44,19 @@
 
   .chat-messages {
     flex: 1;
-    padding: 16px;
+    padding-bottom: 8px;
     overflow-y: auto;
     justify-content: center;
     align-items: center;
     display: flex;
     font-size: 24px;
     flex-direction: column;
+    background-color: #494c55;
+    width: 100%;
+    border-radius: 15px;
+    
+    overflow: hidden;
+    color: white;
   }
 
   #select-room-img {
@@ -85,16 +86,22 @@
   .chat-input {
     display: flex;
     padding: 16px;
-    border-top: 1px solid #ddd;
-    background-color: #ffffff;
+    /* border-top: 1px solid #ddd; */
+    /* background-color: #ffffff; */
     height: 5rem;
     overflow: hidden;
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: -80px;
   }
   
   .chat-input textarea {
     flex: 1;
     padding: 8px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
+    color: white;
+    background-color: #23252f;
     border-radius: 8px;
     margin-right: 8px;
     resize: none;

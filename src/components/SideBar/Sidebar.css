@@ -1,13 +1,14 @@
 .sidebar {
     width: 20%;
-    background-color: var(--sidebar-bg);
+    background-color: #23252f;
     display: flex;
     flex-direction: column;
     padding: 16px;
-    /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
-    height: 95vh;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    /* height: 95vh; */
+    border-radius: 15px;
+    color: white;
+    /* position: absolute;
+    top: 32px; */
   }
   
   .sidebar h3 {
@@ -31,7 +32,7 @@
   .sidebar ul li {
     padding: 8px;
     margin-bottom: 8px;
-    background-color: var(--secondary-bg);
+    background-color: gray;
     border-radius: 4px;
     cursor: pointer;
     text-align: center;
@@ -39,6 +40,6 @@
   }
   
   .sidebar ul li:hover {
-    background-color: #ffd54f;
+    background-color: hsl(0, 0%, 30%);
   }
   

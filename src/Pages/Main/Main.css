@@ -1,10 +1,35 @@
 .main-layout {
     margin-top: 1rem;
-    display: flex;
-    align-items: center;
+    padding: 1rem 2rem;
     height: 95vh;
-    /* box-shadow: 1px 1px 5px black; */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
+    background-color: #3b3e46;
+    width: 90vw;
+    display: flex;
   }
   
+  .main-pos {
+    display: flex;
+    flex-direction: column; /* Stack header on top, then details/chat */
+    width: 80%; /* Adjust to occupy remaining space */
+    height: 100%; /* Full height */
+    padding-left: 16px;
+    gap: 1rem;
+  }
+
+  .details-chat {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .sidebar-pos {
+    width: 20%; /* Adjust this as needed */
+    height: 100%; /* Full height */
+    background-color: #23252f;
+    color: white;
+    padding: 16px;
+  }
+  
+ 

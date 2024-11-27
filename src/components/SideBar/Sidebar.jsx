@@ -5,14 +5,14 @@ import DirectMessages from "../Chat/DirectMessages/DirectMessages.jsx";
 function Sidebar({onChannelSelect}) {
 
   return (
-    <aside className="sidebar">
-      <div className="search-bar">
+    <div className="sidebar">
+      {/* <div className="search-bar">
         <input type="text" placeholder="Search channels or users..." />
-      </div>
+      </div> */}
       <ChannelList onChannelSelect={onChannelSelect}/>
       <DirectMessages />
       
-    </aside>
+    </div>
   );
 };
 

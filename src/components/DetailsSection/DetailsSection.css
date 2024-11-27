@@ -1,21 +1,22 @@
 .details-section {
-    width: 20%;
-    background-color: #ffffff;
-    border-left: 1px solid #ddd;
+    width: 30%;
+    background-color:  #23252f;
+    /* border-left: 1px solid #ddd; */
     padding: 16px;
     /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); */
-    height: 95vh;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    height: 77.5vh;
+    border-radius: 15px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
-  }
+    color: white;
+ }
   
 #logo {
   width: 120px;
   margin-top: 15px;
+  border-radius: 10px;
 }
 
 .details-section p {

@@ -1,3 +1,15 @@
 .direct-messages {
     margin-top: 16px;
 }
+
+.direct-messages ul li {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 12px;
+    align-items: center;
+}
+
+.avatar {
+    width: 16px;
+    height: auto;
+}

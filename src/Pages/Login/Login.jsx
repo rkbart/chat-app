@@ -1,7 +1,7 @@
 import "./Login.css";
 import google from "../../assets/google.png";
 import apple from "../../assets/apple.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../constants/Constants";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,23 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 function Login({onLogin}) {
+
+    useEffect(() => {
+        const savedAuth = localStorage.getItem('authToken');
+        if (savedAuth) {
+            const { token, client, uid } = JSON.parse(savedAuth);
+    
+            // Set headers for subsequent requests
+            axios.defaults.headers.common['access-token'] = token;
+            axios.defaults.headers.common['client'] = client;
+            axios.defaults.headers.common['uid'] = uid;
+    
+            // Optionally, call onLogin or navigate directly if a token exists
+            onLogin();
+            navigate('/main');
+        }
+    }, []);
+    
     const { handleHeaders } = useData();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,10 +49,19 @@ function Login({onLogin}) {
             const { data, headers } = response;
         
             if(data && headers) {
+                
                 handleHeaders(headers);
+
+                const token = headers['access-token'];
+                const client = headers['client'];
+                const uid = headers['uid'];
+
+                localStorage.setItem('authToken', JSON.stringify({ token, client, uid }));
+                
                 onLogin();
                 navigate('/main');
             }
+
           } catch(error) {
             if(error.response.data.errors) {
             //   return alert("Invalid credentials");
@@ -68,7 +94,7 @@ function Login({onLogin}) {
       }
 
       function forgotPassword() {
-        toast.info("Lorem ipsum dolor");
+        toast.info("Feature coming soon.");
       }
 
       const handleGoogleLogin = () => {
