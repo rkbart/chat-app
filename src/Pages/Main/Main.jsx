@@ -8,6 +8,7 @@ import "./Main.css";
 function Main() {
 
   const [chatRoom, setChatRoom] = useState("Select a channel");
+  const [receiver, setReceiver] = useState("");
 
   const handleChatRoom = (channel) => {
     setChatRoom(channel);
@@ -15,12 +16,19 @@ function Main() {
 
   return (
     <div className="main-layout">
-      <Sidebar className="sidebar-pos" onChannelSelect={handleChatRoom}/>
+      <Sidebar 
+        className="sidebar-pos" 
+        onChannelSelect={handleChatRoom} 
+        setReceiver={setReceiver}/>
+
       <div className="main-pos">
-        <Header className="chat-header" chatRoom={chatRoom}/>
+        <Header 
+          className="chat-header" 
+          chatRoom={chatRoom}/>
+
         <div className="details-chat">
-         <DetailsSection />
-         <ChatWindow />
+          <DetailsSection  />
+          <ChatWindow receiver={receiver} />
         </div>  
       </div> 
     </div>

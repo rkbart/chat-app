@@ -8,7 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout2 } from "react-icons/tb";
 import { TbSearch } from "react-icons/tb";
 
-function Sidebar({onChannelSelect}) {
+function Sidebar({onChannelSelect, setReceiver}) {
 
   return (
     <div className="sidebar">
@@ -16,7 +16,7 @@ function Sidebar({onChannelSelect}) {
         <input type="text" placeholder="Search channels or users..." />
       </div> */}
       <ChannelList onChannelSelect={onChannelSelect}/>
-      <DirectMessages />
+      <DirectMessages setReceiver={setReceiver} />
       
     </div>
   );

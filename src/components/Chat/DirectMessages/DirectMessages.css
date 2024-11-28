@@ -1,5 +1,17 @@
 .direct-messages {
     margin-top: 16px;
+    width:160px;
+   
+}
+
+.direct-messages ul {
+    max-height: 290px; /* Set the height for the scrollable area */
+    width: 200px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+    padding: 8px;
+    margin: 0;
+    list-style-type: none; /* Remove default list styling */    
 }
 
 .direct-messages ul li {
@@ -7,6 +19,12 @@
     justify-content: space-evenly;
     font-size: 12px;
     align-items: center;
+    padding: 8px; /* Add some padding for better appearance */
+    border-bottom: 1px solid #ccc; /* Optional: Add a subtle divider */
+}
+
+.direct-messages ul li:last-child {
+    border-bottom: none; /* Remove border for the last item */
 }
 
 .avatar {

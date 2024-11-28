@@ -1,64 +1,65 @@
 .chat-window {
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     flex-direction: column;
-    background-color:  #23252f;
+    background-color:#23252f;
     height: 100%;
     align-items: center;
-    /* padding: 10px; */
     border-radius: 15px;
     width: 100%;
     padding: 16px;
   }
-    
-  .status {
-    color: var(--success-color);
-    user-select: none;
+   
+  .name-display {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;  
+    font-size: 24px;
+    width: 100%;              
+    color: white;
+    margin-bottom: 8px;
+    margin-top: -8px;               
   }
-
-  .status-online {
-    color: var(--success-color)
-  }
-  .online-status-circle {
-    width: 10px;
-    height: 10px;
-    background-color: var(--success-color);
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
-  }
-  
-  .status-offline {
-    color: red;
-  }
-
-  .offline-status-circle {
-    width: 10px;
-    height: 10px;
-    background-color: red;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-  }
-  
 
   .chat-messages {
-    flex: 1;
+    /* flex: 1; */
     padding-bottom: 8px;
     overflow-y: auto;
     justify-content: center;
     align-items: center;
     display: flex;
-    font-size: 24px;
+    font-size: 16px;
     flex-direction: column;
     background-color: #494c55;
     width: 100%;
-    border-radius: 15px;
-    
-    overflow: hidden;
+    height: 82%;
+    border-radius: 10px;
     color: white;
+    padding: 0px 16px;
+    max-height: 377px;
+
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 transparent;
   }
 
+  .chat-messages::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .chat-messages::-webkit-scrollbar-track {
+    background: #494c55; /* Match the background color */
+    border-radius: 10px; /* Round corners of the track */
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Round corners of the thumb */
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
   #select-room-img {
     width: 300px;
     height: auto;
@@ -72,52 +73,61 @@
   }
   
   .chat-bubble.sender {
-    background-color: var(--bubble-sender);
+    background-color: hsla(230, 15%, 16%, 0.5);
     align-self: flex-end;
     user-select: none; /*para d makopya*/
+    color:whitesmoke;
   }
   
   .chat-bubble.receiver {
-    background-color: var(--bubble-receiver);
+    background-color: #23252fd0;
+    /* background-color: var(--bubble-receiver); */
     align-self: flex-start;
     user-select: none; 
+    color: whitesmoke;
   }
   
   .chat-input {
     display: flex;
     padding: 16px;
-    /* border-top: 1px solid #ddd; */
-    /* background-color: #ffffff; */
-    height: 5rem;
+    justify-content: center; /* Adjust alignment if needed */
+    align-items: center;
+    height: 3rem;
     overflow: hidden;
-    width: 100%;
-    border-radius: 15px;
-    margin-top: 10px;
-    margin-bottom: -80px;
+    width: 100%; /* Match width to parent container */
+    max-width: 100%; /* Prevent overflow */
+    background-color: #494c55; /* Optional: Match background to `.chat-messages` */
+    border-radius: 10px; /* Optional: Match border-radius */
+    margin-top: 8px;
   }
   
-  .chat-input textarea {
-    flex: 1;
+  .chat-input input {
+    flex: 1; /* Make the input fill the available space */
     padding: 8px;
-    /* border: 1px solid #ddd; */
+    height: 32px;
     color: white;
     background-color: #23252f;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-right: 8px;
-    resize: none;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    vertical-align: text-top;
-  }
-
-  .chat-input .send-button {
-    background-color: var(--success-color);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
   }
   
+  .chat-input .send-button {
+    background-color: hsla(225, 100%, 50%, 0.55);
+    color: white;
+    width: 42px; /* Allow button to size based on content */
+    height: auto; /* Match the height of the input */
+    padding: 5px 10px; /* Adjust padding for better alignment */
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 29px;
+  }
+  
+  
   .chat-input .send-button:hover {
-    background-color: hsl(88, 50%, 45%);
+    background-color: hsl(225, 100%, 50%);
+    color: whitesmoke;
   }
