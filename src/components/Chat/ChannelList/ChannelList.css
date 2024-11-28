@@ -26,6 +26,14 @@
     transition: color 0.3s ease;
     color: hsla(0, 0%, 50%, 0.7);
 }
- 
+
+.channels ul li {
+    list-style: none;
+    padding: 8px;
+}
+
+.channels ul {
+    padding: 16px;
+}
 
 

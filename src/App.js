@@ -20,9 +20,9 @@ function App() {
     <DataProvider>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/login" 
+          <Route path="/login" 
                  element={<Login 
-                            onLogin={handleLogin}/>}/>  */}
+                            onLogin={handleLogin}/>}/> 
           <Route path="/main" 
                  element={<Main/>}/> 
           <Route

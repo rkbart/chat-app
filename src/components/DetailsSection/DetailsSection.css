@@ -1,18 +1,72 @@
 .details-section {
     width: 30%;
-    background-color:  #23252f;
+    background-color:  hsl(230, 15%, 16%);
     /* border-left: 1px solid #ddd; */
     padding: 16px;
     /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); */
     height: 77.5vh;
     border-radius: 15px;
-    display: flex;
+    /* display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
     color: white;
  }
   
+ .details-section h3 {
+  text-align: left;
+ }
+
+ .tabs {
+  display: flex;
+  justify-content: center;
+  background-color: hsl(230, 10%, 20%) ;
+  border-radius: 5px;
+  margin: 8px 0px;
+  padding: 0px 3px;
+  /* text-align: center; */
+ }
+
+ .tabs button {
+  margin: 6px 3px;
+  padding: 5px 8px;
+  border: none;
+  background-color: transparent;
+  color: hsla(0, 9%, 76%, 0.664);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+ }
+
+ .tabs button:hover {
+  background-color: hsla(0, 0%, 90%, 0.2);
+  border-radius: 5px;
+  padding: 5px 8px;
+  transition: 0.3s ease;
+ }
+
+ /* .tabs button:active {
+  color: hsla(239, 100%, 50%, 0.664);
+ } */
+ 
+ .tabs button:focus {
+  background-color: hsla(0, 0%, 90%, 0.2);
+  border-radius: 5px;
+  padding: 5px 8px;
+  color: hsla(239, 100%, 50%, 0.5);
+ } 
+
+ .button-selected {
+  background-color: hsla(0, 0%, 90%, 0.2);
+  border-radius: 5px;
+  padding: 5px 8px;
+  color: hsla(239, 100%, 58%, 0.664);
+ }
+
+ .channel-list-container {
+  
+ }
+
 #logo {
   width: 120px;
   margin-top: 15px;

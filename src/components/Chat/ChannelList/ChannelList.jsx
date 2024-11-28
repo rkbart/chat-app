@@ -51,12 +51,12 @@ function ChannelList({onChannelSelect}) {
 
   return (
     <div className="channels">
-      <span id="icon">
+      {/* <span id="icon">
         <h3>Channels </h3>
         <MdPlaylistAdd 
           className="add-channel-icon"
           onClick={handleAddChannel} />
-      </span>
+      </span> */}
 
       <ul>
         {channelsList.map((channel,index) => 
