@@ -3,7 +3,8 @@
     background-color: #23252f;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 20px;
+    justify-content: space-between;
     /* height: 95vh; */
     border-radius: 15px;
     color: white;
@@ -42,4 +43,32 @@
   .sidebar ul li:hover {
     background-color: hsl(0, 0%, 30%);
   }
-  
+
+  .contacts-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .contacts-container h3 {
+   margin-left: 5px;
+   margin-top: 5px;
+  }
+  .contacts {
+    width: 32px;
+    height: auto;
+  }
+
+  .logout {
+    width: 32px;
+    height: auto;
+    margin-right: 5px;
+  }
+
+  .logout-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }

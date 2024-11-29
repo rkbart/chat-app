@@ -8,18 +8,24 @@ import "./Main.css";
 function Main() {
 
   const [chatRoom, setChatRoom] = useState("Select a channel");
-  const [receiver, setReceiver] = useState("");
-
+  const [receiver, setReceiver] = useState(null);
+  const [inbox, setInbox] = useState([]);
+  
   const handleChatRoom = (channel) => {
     setChatRoom(channel);
   }
+
+  const handleInboxSelect = (senderId) => {
+    setReceiver(senderId);  // Update receiver to the clicked user's id
+  };
 
   return (
     <div className="main-layout">
       <Sidebar 
         className="sidebar-pos" 
         onChannelSelect={handleChatRoom} 
-        setReceiver={setReceiver}/>
+        setReceiver={setReceiver}
+        setInbox={setInbox}/>
 
       <div className="main-pos">
         <Header 
@@ -27,7 +33,7 @@ function Main() {
           chatRoom={chatRoom}/>
 
         <div className="details-chat">
-          <DetailsSection  />
+          <DetailsSection inbox={inbox} onInboxSelect={handleInboxSelect}/>
           <ChatWindow receiver={receiver} />
         </div>  
       </div> 

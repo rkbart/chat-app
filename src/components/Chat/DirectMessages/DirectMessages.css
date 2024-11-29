@@ -1,33 +1,57 @@
+/* DirectMessages styles */
 .direct-messages {
     margin-top: 16px;
-    width:160px;
-   
-}
-
-.direct-messages ul {
-    max-height: 290px; /* Set the height for the scrollable area */
+    width: 160px; /* Keep the width as it was */
+  }
+  
+  /* Apply scrollbar styles to the message list */
+  .direct-messages ul {
+    max-height: 410px;
     width: 200px;
     overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     padding: 8px;
     margin: 0;
-    list-style-type: none; /* Remove default list styling */    
-}
-
-.direct-messages ul li {
+    list-style-type: none; /* Remove default list styling */
+    
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 transparent; /* Scrollbar thumb color */
+  }
+  
+  /* Customizing scrollbar for webkit browsers (Chrome, Safari, Edge) */
+  .direct-messages ul::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .direct-messages ul::-webkit-scrollbar-track {
+    background: #494c55; /* Match the background color */
+    border-radius: 10px; /* Round corners of the track */
+  }
+  
+  .direct-messages ul::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Round corners of the thumb */
+  }
+  
+  .direct-messages ul::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+  }
+  
+  .direct-messages ul li {
     display: flex;
     justify-content: space-evenly;
     font-size: 12px;
     align-items: center;
     padding: 8px; /* Add some padding for better appearance */
     border-bottom: 1px solid #ccc; /* Optional: Add a subtle divider */
-}
-
-.direct-messages ul li:last-child {
+  }
+  
+  .direct-messages ul li:last-child {
     border-bottom: none; /* Remove border for the last item */
-}
-
-.avatar {
+  }
+  
+  .avatar {
     width: 16px;
     height: auto;
-}
+  }
+  

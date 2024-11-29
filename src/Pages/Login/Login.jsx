@@ -12,21 +12,21 @@ import { toast, ToastContainer } from 'react-toastify';
 
 function Login({onLogin}) {
 
-    useEffect(() => {
-        const savedAuth = localStorage.getItem('authToken');
-        if (savedAuth) {
-            const { token, client, uid } = JSON.parse(savedAuth);
+    // useEffect(() => {
+    //     const savedAuth = localStorage.getItem('authToken');
+    //     if (savedAuth) {
+    //         const { token, client, uid } = JSON.parse(savedAuth);
     
-            // Set headers for subsequent requests
-            axios.defaults.headers.common['access-token'] = token;
-            axios.defaults.headers.common['client'] = client;
-            axios.defaults.headers.common['uid'] = uid;
+    //         // Set headers for subsequent requests
+    //         axios.defaults.headers.common['access-token'] = token;
+    //         axios.defaults.headers.common['client'] = client;
+    //         axios.defaults.headers.common['uid'] = uid;
     
-            // Optionally, call onLogin or navigate directly if a token exists
-            onLogin();
-            navigate('/main');
-        }
-    }, []);
+    //         // Optionally, call onLogin or navigate directly if a token exists
+    //         onLogin();
+    //         navigate('/main');
+    //     }
+    // }, []);
     
     const { handleHeaders } = useData();
     const [email, setEmail] = useState('');

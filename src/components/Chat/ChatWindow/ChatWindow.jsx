@@ -9,9 +9,11 @@ function ChatWindow({ receiver }) {
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
   const [mgaMessages, setMgaMessages] = useState([]);
-
+  
   useEffect(() => {
     const fetchMessages = async () => {
+      if (!receiver) return;
+      
       try {
         const response = await axios.get(
           `${API_URL}/messages?receiver_id=${receiver}&receiver_class=User`,

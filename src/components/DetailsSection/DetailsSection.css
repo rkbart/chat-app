@@ -77,3 +77,45 @@
   text-align: center;
   margin-top: 10px;
 }
+
+.primary-container ul{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style: none;
+  font-size: 12px;
+  max-height: 370px;
+  overflow-y: auto;
+  
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 transparent;
+}
+
+.primary-container::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.primary-container::-webkit-scrollbar-track {
+  background: #494c55; /* Match the background color */
+  border-radius: 10px; /* Round corners of the track */
+}
+
+.primary-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Round corners of the thumb */
+}
+
+.primary-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+.message-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #494c55;
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  margin: 2px 0;
+  cursor: pointer;
+}

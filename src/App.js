@@ -20,7 +20,7 @@ function App() {
     <DataProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" 
+          <Route path="/" 
                  element={<Login 
                             onLogin={handleLogin}/>}/> 
           <Route path="/main" 
@@ -31,7 +31,7 @@ function App() {
               isAuthenticated ? (
                 <Main onLogout={handleLogout} />
               ) : (
-                <Navigate to="/login" />
+                <Navigate to="/" />
                 ) 
               } 
             />

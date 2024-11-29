@@ -5,19 +5,43 @@ import { PiChatsThin } from "react-icons/pi";
 import { IoCallSharp } from "react-icons/io5"; 
 import { RiContactsBook3Line } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
-import { TbLogout2 } from "react-icons/tb";
 import { TbSearch } from "react-icons/tb";
+import { TbLogout2 } from "react-icons/tb";
+import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
-function Sidebar({onChannelSelect, setReceiver}) {
+function Sidebar({onChannelSelect, setReceiver, setInbox }) {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+      navigate('/');
+  };
 
   return (
     <div className="sidebar">
       {/* <div className="search-bar">
         <input type="text" placeholder="Search channels or users..." />
       </div> */}
-      <ChannelList onChannelSelect={onChannelSelect}/>
-      <DirectMessages setReceiver={setReceiver} />
-      
+      {/* <ChannelList onChannelSelect={onChannelSelect}/> */}
+      {/* <TbSearch /> */}
+      {/* <PiChatsThin /> */}
+      {/* <IoCallSharp /> */}
+      <div className="contacts-container">
+        <RiContactsBook3Line className="contacts" /> 
+        <h3>Contacts</h3>
+      </div>
+      <DirectMessages 
+        className="direct-messages"
+        setReceiver={setReceiver} 
+        setInbox={setInbox} 
+        />
+      {/* <IoSettingsOutline /> */}
+      <div className="logout-container"
+            onClick={handleLogout}>
+        <TbLogout2 className="logout" />
+        <h4>Log out</h4>
+      </div>
     </div>
   );
 };
