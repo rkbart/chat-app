@@ -12,33 +12,17 @@ import { toast, ToastContainer } from 'react-toastify';
 
 function Login({onLogin}) {
 
-    // useEffect(() => {
-    //     const savedAuth = localStorage.getItem('authToken');
-    //     if (savedAuth) {
-    //         const { token, client, uid } = JSON.parse(savedAuth);
-    
-    //         // Set headers for subsequent requests
-    //         axios.defaults.headers.common['access-token'] = token;
-    //         axios.defaults.headers.common['client'] = client;
-    //         axios.defaults.headers.common['uid'] = uid;
-    
-    //         // Optionally, call onLogin or navigate directly if a token exists
-    //         onLogin();
-    //         navigate('/main');
-    //     }
-    // }, []);
-    
-    const { handleHeaders } = useData();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignUp, setIsSignUp] = useState(false); 
+    const { handleHeaders } = useData();
+    
     const navigate = useNavigate();
     const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
     const handleLogin = async (email, password) => {
-        // event.preventDefault();
-
+        
         try {
             const loginCredentials = {
               email,
@@ -49,15 +33,7 @@ function Login({onLogin}) {
             const { data, headers } = response;
         
             if(data && headers) {
-                
                 handleHeaders(headers);
-
-                const token = headers['access-token'];
-                const client = headers['client'];
-                const uid = headers['uid'];
-
-                localStorage.setItem('authToken', JSON.stringify({ token, client, uid }));
-                
                 onLogin();
                 navigate('/main');
             }
@@ -70,7 +46,7 @@ function Login({onLogin}) {
            }
         };
 
-      function handleSignUp(event) {
+      const handleSignUp = async (event) => {
         event.preventDefault();
 
         if (!emailRegEx.test(email)) {
@@ -83,13 +59,33 @@ function Login({onLogin}) {
             // alert("Passwords do not match. Please try again.");
             toast.error("Passwords do not match. Please try again.");
             return;
-        }  
+        } 
         
-        // alert("Sign-up successful! You can now log in.");
+        try {
+            const signUpCredentials = {
+              email,
+              password,
+              confirmPassword
+            }
+      
+            const response = await axios.post(`${API_URL}/auth/`, signUpCredentials);
+            const { data, headers } = response;
+        
+            if(data && headers) {
+                handleHeaders(headers);
+                onLogin();
+                navigate('/main');
+            }
+
+          } catch(error) {
+            if(error.response.data.errors) {
+                return toast.error(error);
+            }
+           }
         toast.success("Sign-up successful! You can now log in.");
         setEmail('');
         setPassword('');
-        setConfirmPassword(''); // Reset fields
+        setConfirmPassword(''); 
         setIsSignUp(false); 
       }
 
@@ -101,12 +97,10 @@ function Login({onLogin}) {
         const gmail = "ryan.kristopher.bartolome@gmail.com";
         const gmailPassword = "password";
         toast.success("Logging in using Google account.");
-        // alert("Logging in using Google account.");
         handleLogin(gmail,gmailPassword);
     };
     
-    // const notify = () => toast.info("Feature not yet available");
-
+   
     return (
         <div className={`login_form ${isSignUp ? 'sign-up' : 'login'}`}>
             <ToastContainer position="top-center" toastStyle={{color: "black"}}/>

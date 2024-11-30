@@ -7,9 +7,10 @@ import DataProvider from "./context/DataProvider.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  
   const handleLogin = () => {
     setIsAuthenticated(true);
+  
   };
 
   const handleLogout = () => {

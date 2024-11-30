@@ -1,10 +1,11 @@
 import "./DetailsSection.css";
+import { MdPlaylistAdd } from "react-icons/md";
 import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
   const [selectedTab, setSelectedTab] = useState("primary");
-
+  
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
@@ -15,30 +16,36 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
     }
   };
 
-  // Get the latest message for each sender
-  const getLatestMessages = (inbox) => {
-    // Sort inbox by `created_at` descending (newest first)
-    const sortedInbox = inbox.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const handleChannelClick = (channelName) => {
+    if (onChannelSelect) {
+      onChannelSelect(channelName); // Pass the selected channel's name
+    }
+  };
 
-    // Use a Map to store the latest message for each sender by their ID
+  const getLatestMessages = (inbox) => {
+    if (!Array.isArray(inbox)) return [];
+
+    const sortedInbox = inbox.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     const latestMessagesMap = new Map();
     sortedInbox.forEach((message) => {
-      if (!latestMessagesMap.has(message.sender.id)) {
-        latestMessagesMap.set(message.sender.id, message); // Add only the first (latest) message for this sender
+      if (message?.sender?.uid !== "ryan.kristopher.bartolome@gmail.com" && message?.sender?.id && !latestMessagesMap.has(message.sender.id)) {
+        latestMessagesMap.set(message.sender.id, message);
       }
     });
-
-    // Return an array of unique messages (latest ones only)
     return Array.from(latestMessagesMap.values());
   };
 
-  // Get the filtered and sorted messages
   const latestMessages = getLatestMessages(inbox);
 
   return (
     <div className="details-section">
       <div className="title-container">
-        <h3>Inbox</h3>
+      <h3>
+        {selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)}
+      </h3>
+        <MdPlaylistAdd
+          className={`add-channel-icon ${selectedTab === "channels" ? "visible" : "hidden"}`}
+        />
       </div>
       <div className="tabs">
         <button
@@ -60,12 +67,7 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
           Archived
         </button>
       </div>
-
-      {selectedTab === "channels" && (
-        <div className="channel-list-container">
-          <ChannelList onChannelSelect={onChannelSelect} />
-        </div>
-      )}
+      
       {selectedTab === "primary" && (
         <div className="primary-container">
           <ul>
@@ -83,6 +85,16 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
               <p>No messages found.</p>
             )}
           </ul>
+        </div>
+      )}
+      {selectedTab === "channels" && (
+        <div className="channel-list-container">
+          <ChannelList onChannelSelect={(channelName) => handleChannelClick(channelName)} /> 
+        </div>
+      )}
+      {selectedTab === "archived" && (
+        <div className="archive-container">
+          <h4>No Archives found.</h4>
         </div>
       )}
     </div>

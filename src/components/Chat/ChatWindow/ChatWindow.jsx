@@ -5,11 +5,15 @@ import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
 
-function ChatWindow({ receiver }) {
+function ChatWindow({ receiver, userList }) {
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
   const [mgaMessages, setMgaMessages] = useState([]);
   
+  // Find the user corresponding to the receiver ID
+  const receiverUser = userList.find(user => user.id === receiver);
+  const receiverEmail = receiverUser ? receiverUser.uid : "";
+
   useEffect(() => {
     const fetchMessages = async () => {
       if (!receiver) return;
@@ -83,7 +87,7 @@ function ChatWindow({ receiver }) {
   return (
     <div className="chat-window">
       <div className="name-display">
-        <span>{receiver ? `User ${receiver}` : "Select a user"}</span>
+      <span>{receiver ? receiverEmail : "Select a user or channel"}</span>
       </div>
 
       <div className="chat-messages">

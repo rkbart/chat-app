@@ -4,9 +4,9 @@ import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { API_URL } from "../../../constants/Constants.jsx";
 
-function DirectMessages({ setReceiver,setInbox }) {
+function DirectMessages({ setReceiver,setInbox,setUserList }) {
     const { userHeaders } = useData();
-    const [userList, setUserList] = useState([]);
+    const [userList, setLocalUserList] = useState([]);
     const [userAvatars, setUserAvatars] = useState([]);
     
     const getUsers = async () => {
@@ -14,10 +14,10 @@ function DirectMessages({ setReceiver,setInbox }) {
         try {
           const response = await axios.get(`${API_URL}/users`,  { headers : userHeaders });
           const users = response.data.data;
-          const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test"));
+          const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") && user.email !== "ryan.kristopher.bartolome@gmail.com");
           setUserList(filteredUsers);
-            console.log("Updated userList: ", filteredUsers);
-
+          setLocalUserList(filteredUsers);
+          
           const avatars = filteredUsers.map(user => {
             return `https://robohash.org/${user.email}.png?set=set4`; // Unique avatar URL
           });
@@ -31,20 +31,15 @@ function DirectMessages({ setReceiver,setInbox }) {
                 `${API_URL}/messages?receiver_id=${receiverId}&receiver_class=User`,{ headers : userHeaders }
               );
               const inboxContent = messagesResponse.data.data;
-                // console.log(`object sa API receive ${receiverId}:`, inboxContent);
-                
-              // Check if the messages array is empty
+              
               if (Array.isArray(inboxContent) && inboxContent.length > 0) {
                 setInbox((prevInbox) => [...prevInbox, ...inboxContent]);
-                console.log(`May messages kay user ${receiverId}`);
-              } else {
-                console.log(`walang laman si ${receiverId}:`);
-              } 
-                
-              } catch (error) {
-                console.error(`Error fetching messages for user ${receiverId}:`, error);
+              }
+            } catch (error) {
+                alert(error)
               }
             }
+
         } catch(error) {
           if(error.response.data.errors){
             alert("Cannot get users.");

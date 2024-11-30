@@ -1,13 +1,42 @@
 import "./ChannelList.css";
-import { useState } from "react";
-import { MdPlaylistAdd } from "react-icons/md";
+import { useState, useEffect } from "react";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import NewChannel from "../NewChannel/NewChannel.jsx";
+import { useData } from "../../../context/DataProvider.jsx";
+import { API_URL } from "../../../constants/Constants.jsx";
+import axios from "axios";
 
 function ChannelList({onChannelSelect}) {
-
-  const [channelsList, setChannelsList] = useState(["General", "Work", "Random"]);
+ 
+  const { userHeaders } = useData();
+  const [channelsList, setChannelsList] = useState([]);
   const [addChannelVisible, setAddChannelVisible] = useState(false);
+
+  const getChannels = async () => {
+
+    try {
+      const response = await axios.get(`${API_URL}/channels`,  { headers : userHeaders });
+      const channels = response.data.data;
+      console.log(channels)
+      if(channels) {
+      setChannelsList(channels || []);
+      // setChannelsList(channels);
+    }
+        
+    
+    } catch(error) {
+      if(error.response?.data?.errors){
+        alert("Cannot get channels.");
+      }
+    }
+  }
+  useEffect(() => { 
+    if(channelsList.length === 0) {
+      getChannels();
+      }
+    },[]
+  );
   
   function handleAddChannel() {
 
@@ -23,7 +52,9 @@ function ChannelList({onChannelSelect}) {
   }
 
   function selectChannel(channel) {
-    onChannelSelect(channel); // send to sidebar
+    if (onChannelSelect) {
+      onChannelSelect(channel.name); // Pass the selected channel's name
+    }
   };
 
   function deleteChannel(index) {
@@ -51,19 +82,14 @@ function ChannelList({onChannelSelect}) {
 
   return (
     <div className="channels">
-      {/* <span id="icon">
-        <h3>Channels </h3>
-        <MdPlaylistAdd 
-          className="add-channel-icon"
-          onClick={handleAddChannel} />
-      </span> */}
-
       <ul>
         {channelsList.map((channel,index) => 
-          <li key={index}
-              onClick={() => selectChannel(channel)}>
-              <span className="list-holder">
-                <span>#{channel}</span>
+          <li className="channel-list-item" 
+              key={index}
+              onClick={() => selectChannel(channel)}
+              >
+              <span className="list-holder" >
+                <span>#{channel.name}</span>
                 <RiDeleteBin6Line 
                   className="remove-channel-icon"
                   onClick={() => deleteChannel(index)} 

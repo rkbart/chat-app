@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header.jsx";
 import "./Main.css";
 
 function Main() {
-
+  const [userList, setUserList] = useState([]);
   const [chatRoom, setChatRoom] = useState("Select a channel");
   const [receiver, setReceiver] = useState(null);
   const [inbox, setInbox] = useState([]);
@@ -19,13 +19,19 @@ function Main() {
     setReceiver(senderId);  // Update receiver to the clicked user's id
   };
 
+  const handleChannelSelect = (channelName) => {
+    setReceiver(channelName); // Update receiver to the clicked channel's name
+  };
+
   return (
     <div className="main-layout">
       <Sidebar 
         className="sidebar-pos" 
         onChannelSelect={handleChatRoom} 
         setReceiver={setReceiver}
-        setInbox={setInbox}/>
+        setInbox={setInbox}
+        setUserList={setUserList}
+        />
 
       <div className="main-pos">
         <Header 
@@ -33,8 +39,11 @@ function Main() {
           chatRoom={chatRoom}/>
 
         <div className="details-chat">
-          <DetailsSection inbox={inbox} onInboxSelect={handleInboxSelect}/>
-          <ChatWindow receiver={receiver} />
+          <DetailsSection inbox={inbox} 
+                          onInboxSelect={handleInboxSelect}
+                          onChannelSelect={handleChannelSelect}
+          />
+          <ChatWindow receiver={receiver} userList={userList} />
         </div>  
       </div> 
     </div>

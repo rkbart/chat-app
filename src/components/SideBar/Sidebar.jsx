@@ -10,7 +10,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
-function Sidebar({onChannelSelect, setReceiver, setInbox }) {
+function Sidebar({ setReceiver, setInbox, setUserList}) {
 
   const navigate = useNavigate();
 
@@ -20,13 +20,7 @@ function Sidebar({onChannelSelect, setReceiver, setInbox }) {
 
   return (
     <div className="sidebar">
-      {/* <div className="search-bar">
-        <input type="text" placeholder="Search channels or users..." />
-      </div> */}
-      {/* <ChannelList onChannelSelect={onChannelSelect}/> */}
-      {/* <TbSearch /> */}
-      {/* <PiChatsThin /> */}
-      {/* <IoCallSharp /> */}
+
       <div className="contacts-container">
         <RiContactsBook3Line className="contacts" /> 
         <h3>Contacts</h3>
@@ -34,10 +28,10 @@ function Sidebar({onChannelSelect, setReceiver, setInbox }) {
       <DirectMessages 
         className="direct-messages"
         setReceiver={setReceiver} 
-        setInbox={setInbox} 
+        setInbox={setInbox}
+        setUserList={setUserList}
         />
-      {/* <IoSettingsOutline /> */}
-      <div className="logout-container"
+     <div className="logout-container"
             onClick={handleLogout}>
         <TbLogout2 className="logout" />
         <h4>Log out</h4>

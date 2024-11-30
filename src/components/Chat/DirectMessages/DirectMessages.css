@@ -42,8 +42,8 @@
     justify-content: space-evenly;
     font-size: 12px;
     align-items: center;
-    padding: 8px; /* Add some padding for better appearance */
-    border-bottom: 1px solid #ccc; /* Optional: Add a subtle divider */
+    padding: 8px; 
+    border-bottom: 1px solid #ccc; 
   }
   
   .direct-messages ul li:last-child {
