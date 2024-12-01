@@ -21,7 +21,6 @@ function ChannelList({onChannelSelect}) {
       console.log(channels)
       if(channels) {
       setChannelsList(channels || []);
-      // setChannelsList(channels);
     }
         
     
@@ -52,8 +51,9 @@ function ChannelList({onChannelSelect}) {
   }
 
   function selectChannel(channel) {
+    console.log("Channel selected in ChannelList:", channel);
     if (onChannelSelect) {
-      onChannelSelect(channel.name); // Pass the selected channel's name
+      onChannelSelect(channel); 
     }
   };
 
@@ -68,19 +68,7 @@ function ChannelList({onChannelSelect}) {
     }
   }
 
-  // function deleteChannel(index) {
-  //   if (channelsList.length <= 1) {
-  //     alert("You cannot delete all channels.")
-  //   } else {
-  //     const updatedChannelsList = channelsList.filter((_,i) => i !== index);
-  //     setChannelsList(updatedChannelsList);
-  //     if (updatedChannelsList.length === 1) {
-  //       onChannelSelect(updatedChannelsList[0]);
-  //     }
-  //   }
-  // }
-
-  return (
+return (
     <div className="channels">
       <ul>
         {channelsList.map((channel,index) => 
@@ -100,13 +88,7 @@ function ChannelList({onChannelSelect}) {
       </ul>
       
       {addChannelVisible && (
-        <NewChannel 
-          onAdd={(newChannel) => {
-            setChannelsList([...channelsList, newChannel]);
-            setAddChannelVisible(false);
-          }}
-          onCancel={handleCancel}
-        />
+        <NewChannel onCancel={handleCancel} />
       )}
     </div>
   )

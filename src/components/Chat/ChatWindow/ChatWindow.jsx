@@ -5,15 +5,20 @@ import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
 
-function ChatWindow({ receiver, userList }) {
+function ChatWindow({ receiver, userList, channelName, selectedTab }) {
+  console.log("Channel name in ChatWindow:", channelName);
+  console.log("Props in ChatWindow - Channel Name:", channelName);
+  console.log("Props in ChatWindow - Receiver:", receiver);
+
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
   const [mgaMessages, setMgaMessages] = useState([]);
+  const [mgaChannelMessages, setMgaChannelMessages] = useState([]);
   
   // Find the user corresponding to the receiver ID
   const receiverUser = userList.find(user => user.id === receiver);
   const receiverEmail = receiverUser ? receiverUser.uid : "";
-
+    
   useEffect(() => {
     const fetchMessages = async () => {
       if (!receiver) return;
@@ -84,30 +89,93 @@ function ChatWindow({ receiver, userList }) {
     }
   };
 
+  useEffect(()=>{
+    if (!channelName) return;
+
+    const channelDetails = async () => {
+    
+      try {
+        const response = await axios.get(`${API_URL}/messages?receiver_id=${channelName.id}&receiver_class=Channel`,{ headers: userHeaders });
+        
+        const lamanNgChannel = response.data.data || [];
+        setMgaChannelMessages(lamanNgChannel);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+    if (channelName) {
+      channelDetails();
+    }
+  },[channelName, userHeaders])
+
+
   return (
     <div className="chat-window">
-      <div className="name-display">
-      <span>{receiver ? receiverEmail : "Select a user or channel"}</span>
-      </div>
+      
+      {selectedTab === "primary" && (
+        <div className="primary-chat-container">
+          <div className="name-display">
+          {receiverUser ? <span>{receiverEmail}</span> : <span>Select a user or channel</span>}
+        </div>
+        
+        <div className="chat-messages">
+          {mgaMessages.length > 0 ? (
+            mgaMessages.map((msg) =>
+              msg ? (
+                <div
+                  key={msg.id}
+                  className={`chat-bubble ${
+                    msg.sender?.id === receiver ? "receiver" : "sender"
+                  }`}
+                >
+                  {msg.body}
+                </div>
+              ) : null
+            )
+          ) : (
+            <div>No messages</div>
+          )}
+        </div>
+        </div>
+      )}
 
-      <div className="chat-messages">
-        {mgaMessages.length > 0 ? (
-          mgaMessages.map((msg) => (
-            msg ? ( // Ensure valid message structure before rendering
-              <div
-                key={msg.id}
-                className={`chat-bubble ${
-                  msg.sender?.id === receiver ? "receiver" : "sender"
-                }`}
-              >
-                {msg.body}
-              </div>
-            ) : null
-          ))
-        ) : (
-          <div>No messages</div>
-        )}
-      </div>
+      {selectedTab === "channels" && (
+        <div className="channels-chat-container">
+          <div className="name-display">
+            <span>Select a user or channel</span>
+          </div> 
+          <div className="chat-messages">
+          {mgaChannelMessages && mgaChannelMessages.length > 0 ? (
+            mgaChannelMessages.map((msg) =>
+              msg ? (
+                <div
+                  key={msg.id}
+                  className={`chat-bubble ${
+                    msg.sender?.id === receiver ? "receiver" : "sender"
+                  }`}
+                >
+                  {msg.body}
+                </div>
+              ) : null
+            )
+          ) : (
+            <div>No messages sa archives</div>
+          )}
+          
+        </div>
+        </div>
+      )}
+
+      {selectedTab === "archived" && (
+        <div className="archived-chat-container">
+          <div className="name-display">
+            <span>Archived messages</span>
+          </div> 
+          <div className="chat-messages">
+            <div>No messages sa channel</div>
+          </div>
+        </div>
+      )}
 
       <form className="chat-input" onSubmit={handleSend}>
         <input

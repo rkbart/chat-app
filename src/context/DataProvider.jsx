@@ -6,7 +6,7 @@ const DataContext = createContext();
 
 const DataProvider = ({children}) => {
     const [ userHeaders, setUserHeaders ] = useState('')
-
+    
     const handleHeaders = (header) => {
         const updatedHeader = {
             'access-token': header['access-token'],
@@ -22,6 +22,7 @@ const DataProvider = ({children}) => {
             {
                 handleHeaders,
                 userHeaders,
+               
             }
         }>
             {/* children - these are the elements that can use the context */}

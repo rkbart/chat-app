@@ -1,14 +1,32 @@
 import "../NewChannel/NewChannel.css";
+import { useData } from "../../../context/DataProvider.jsx";
+import axios from "axios";
 import { useState } from "react";
 
-function NewChannel({ onAdd, onCancel }) {
+function NewChannel({  onCancel }) {
+  const { idHolder } = useData();
   const [channelName, setChannelName] = useState("");
+  // const [userIds, setUserIds] = useState([]);
 
-  function handleAdd() {
+  const handleAdd = async (e) => {
+    e.preventDefault();
+
     if (channelName.trim()) {
-      onAdd(channelName); // Pass the new channel name to parent
+      console.log(channelName)
+      console.log(idHolder)
     }
+    // try {
+    //   const channelRequestBody = {
+    //     "name": channelName,
+    //     "user_ids": []
+    //   }
+
+    // } catch {
+
+    // }
   }
+    
+
 
   return (
     <div className="backdrop">

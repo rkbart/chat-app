@@ -9,7 +9,9 @@ function Main() {
   const [userList, setUserList] = useState([]);
   const [chatRoom, setChatRoom] = useState("Select a channel");
   const [receiver, setReceiver] = useState(null);
+  const [channelName, setChannelName] = useState({ name: "", id: "" });
   const [inbox, setInbox] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("primary");
   
   const handleChatRoom = (channel) => {
     setChatRoom(channel);
@@ -19,8 +21,9 @@ function Main() {
     setReceiver(senderId);  // Update receiver to the clicked user's id
   };
 
-  const handleChannelSelect = (channelName) => {
-    setReceiver(channelName); // Update receiver to the clicked channel's name
+  const handleChannelSelect = (selectedChannelName) => {
+    console.log("Channel name received in Main:", selectedChannelName)
+    setChannelName(selectedChannelName); // Update receiver to the clicked channel's name
   };
 
   return (
@@ -42,8 +45,13 @@ function Main() {
           <DetailsSection inbox={inbox} 
                           onInboxSelect={handleInboxSelect}
                           onChannelSelect={handleChannelSelect}
+                          selectedTab={selectedTab} 
+                          setSelectedTab={setSelectedTab}
           />
-          <ChatWindow receiver={receiver} userList={userList} />
+          <ChatWindow receiver={receiver} 
+                      userList={userList} 
+                      channelName={channelName}
+                      selectedTab={selectedTab}/>
         </div>  
       </div> 
     </div>

@@ -2,15 +2,14 @@ import { useState } from "react";
 import Login from "./Pages/Login/Login.jsx";
 import Main from "./Pages/Main/Main.jsx";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import DataProvider from "./context/DataProvider.jsx";
-
+import DataProvider from "../src/context/DataProvider.jsx"
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
+    
   const handleLogin = () => {
     setIsAuthenticated(true);
-  
   };
 
   const handleLogout = () => {
@@ -22,15 +21,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" 
-                 element={<Login 
-                            onLogin={handleLogin}/>}/> 
-          <Route path="/main" 
-                 element={<Main/>}/> 
+                 element={<Login onLogin={handleLogin} />}/> 
+          {/* <Route path="/main" 
+                 element={<Main/>}/>  */}
           <Route
             path="/main"
             element={
               isAuthenticated ? (
-                <Main onLogout={handleLogout} />
+                <Main onLogout={handleLogout}
+                       />
               ) : (
                 <Navigate to="/" />
                 ) 

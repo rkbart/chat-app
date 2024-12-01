@@ -2,9 +2,11 @@ import "./DetailsSection.css";
 import { MdPlaylistAdd } from "react-icons/md";
 import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
 import { useState, useEffect } from "react";
+import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
 
-function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
-  const [selectedTab, setSelectedTab] = useState("primary");
+function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect  }) {
+  // const [selectedTab, setSelectedTab] = useState("primary");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -16,10 +18,18 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
     }
   };
 
-  const handleChannelClick = (channelName) => {
+  const handleChannelClick = (channel) => {
+    console.log("Channel name passed to DetailsSection:", channel);
     if (onChannelSelect) {
-      onChannelSelect(channelName); // Pass the selected channel's name
+      onChannelSelect(channel); // Pass the selected channel's name
     }
+  };
+
+  const handleAddChannelClick = () => {
+    setIsModalOpen(true); // Open the modal
+  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal
   };
 
   const getLatestMessages = (inbox) => {
@@ -45,6 +55,7 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
       </h3>
         <MdPlaylistAdd
           className={`add-channel-icon ${selectedTab === "channels" ? "visible" : "hidden"}`}
+          onClick={handleAddChannelClick}
         />
       </div>
       <div className="tabs">
@@ -89,12 +100,20 @@ function DetailsSection({ onChannelSelect, inbox, onInboxSelect  }) {
       )}
       {selectedTab === "channels" && (
         <div className="channel-list-container">
-          <ChannelList onChannelSelect={(channelName) => handleChannelClick(channelName)} /> 
+          <ChannelList onChannelSelect={handleChannelClick} /> 
         </div>
       )}
       {selectedTab === "archived" && (
         <div className="archive-container">
           <h4>No Archives found.</h4>
+        </div>
+      )}
+      {/* Render the modal */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <NewChannel onCancel={handleCloseModal} />
+          </div>
         </div>
       )}
     </div>

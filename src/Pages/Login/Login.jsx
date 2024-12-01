@@ -1,7 +1,7 @@
 import "./Login.css";
 import google from "../../assets/google.png";
 import apple from "../../assets/apple.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../constants/Constants";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +16,9 @@ function Login({onLogin}) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignUp, setIsSignUp] = useState(false); 
-    const { handleHeaders } = useData();
     
+    const { handleHeaders } = useData();
+        
     const navigate = useNavigate();
     const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
@@ -51,12 +52,10 @@ function Login({onLogin}) {
 
         if (!emailRegEx.test(email)) {
             toast.error("Please enter a valid email address (e.g., name@example.com)", {position: "top-center"});
-            // alert("Please enter a valid email address (e.g., name@example.com)");
             return;
           }
         
           if (password !== confirmPassword) {
-            // alert("Passwords do not match. Please try again.");
             toast.error("Passwords do not match. Please try again.");
             return;
         } 
