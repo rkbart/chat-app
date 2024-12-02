@@ -7,7 +7,7 @@ import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import axios from "axios";
 
-function ChannelList({onChannelSelect}) {
+function ChannelList({onChannelSelect, addUser, setAddUser}) {
  
   const { userHeaders } = useData();
   const [channelsList, setChannelsList] = useState([]);
@@ -88,7 +88,9 @@ return (
       </ul>
       
       {addChannelVisible && (
-        <NewChannel onCancel={handleCancel} />
+        <NewChannel onCancel={handleCancel}
+                    addUser={addUser}
+                    setAddUser={setAddUser} />
       )}
     </div>
   )

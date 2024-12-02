@@ -4,9 +4,10 @@ import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
 import { useState, useEffect } from "react";
 import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
 
-function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect  }) {
+function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect, userList  }) {
   // const [selectedTab, setSelectedTab] = useState("primary");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addUser,setAddUser] = useState(false);
   
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -27,12 +28,15 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
 
   const handleAddChannelClick = () => {
     setIsModalOpen(true); // Open the modal
+    setAddUser(true)
+    console.log(addUser)
   }
+
   const handleCloseModal = () => {
     setIsModalOpen(false); // Close the modal
   };
 
-  const getLatestMessages = (inbox) => {
+ const getLatestMessages = (inbox) => {
     if (!Array.isArray(inbox)) return [];
 
     const sortedInbox = inbox.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -100,7 +104,8 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
       )}
       {selectedTab === "channels" && (
         <div className="channel-list-container">
-          <ChannelList onChannelSelect={handleChannelClick} /> 
+          <ChannelList onChannelSelect={handleChannelClick}
+                        /> 
         </div>
       )}
       {selectedTab === "archived" && (
@@ -112,7 +117,10 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <NewChannel onCancel={handleCloseModal} />
+            <NewChannel onCancel={handleCloseModal}
+                        userList={userList}
+                        addUser={addUser}
+                        setAddUser={setAddUser} />
           </div>
         </div>
       )}

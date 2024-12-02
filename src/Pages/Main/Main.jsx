@@ -47,6 +47,7 @@ function Main() {
                           onChannelSelect={handleChannelSelect}
                           selectedTab={selectedTab} 
                           setSelectedTab={setSelectedTab}
+                          userList={userList}
           />
           <ChatWindow receiver={receiver} 
                       userList={userList} 
