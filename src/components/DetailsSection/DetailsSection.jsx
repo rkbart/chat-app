@@ -105,6 +105,9 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
       {selectedTab === "channels" && (
         <div className="channel-list-container">
           <ChannelList onChannelSelect={handleChannelClick}
+                       userList={userList}
+                       addUser={addUser}
+                       setAddUser={setAddUser}
                         /> 
         </div>
       )}

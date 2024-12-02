@@ -1,10 +1,22 @@
 
 .backdrop {
-    background-color:  hsl(230, 15%, 16%);
+    background-color: hsl(230, 15%, 16%);
     width: 500px;
     height: 100%;
     border-radius: 10px;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid whitesmoke;
+}
+
+.new-channel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 
@@ -12,24 +24,30 @@
 input[type="text"] {
     padding: 8px;
     border: 1px solid #ddd;
+    color:whitesmoke;
     border-radius: 8px;
     width: 80%; /* Adjust width for better appearance */
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    height: 32px;
+    background-color: hsl(230, 15%, 16%);
   }
   
   /* Buttons */
   #buttons button {
     margin: 10px 5px;
-    padding: 8px 12px;
-    background-color: var(--secondary-bg);
+    padding: 8px 5px;
+    background-color: hsla(225, 100%, 50%, 0.55);
     border-radius: 4px;
     cursor: pointer;
-    text-align: center;
+    /* text-align: center; */
     border: none;
+    height: 100%;
+    font-size: 12px;
+    width: 100%;
   }
   
   #buttons button:hover {
-    background-color: #ffd54f;
+    background-color: hsl(225, 100%, 50%);
   }
   
   /* User List */
@@ -37,23 +55,35 @@ input[type="text"] {
     width: 100%; /* Full width inside the modal */
     max-height: 200px; /* Limit height */
     overflow-y: auto; /* Enable vertical scrolling */
-    margin-top: 15px;
-    border: 1px solid #ddd;
+    margin-top: 8px;
+    /* border-bottom: 1px solid #ddd; */
     border-radius: 8px;
     padding: 10px;
-    background-color: #494c55;
+    background-color: hsl(230, 15%, 16%);
+    display: flex;
+    flex-direction: column;
   }
   
+  .select-user-container h3 {
+    margin-left: 8px;
+  }
+
   .user-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    background-color: hsl(230, 15%, 16%);
   }
   
   .user-item {
     display: flex;
     align-items: center;
-    margin: 5px 0;
+    margin: 5px 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 50%;
+    padding: 2px 8px;
+    background-color: #888;
   }
   
   .user-item label {
@@ -79,3 +109,5 @@ input[type="text"] {
   .select-user-container::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  

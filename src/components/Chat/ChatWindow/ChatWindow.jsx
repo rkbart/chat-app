@@ -15,7 +15,8 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
   const [mgaMessages, setMgaMessages] = useState([]);
   const [mgaChannelMessages, setMgaChannelMessages] = useState([]);
   
-  // Find the user corresponding to the receiver ID
+
+   // Find the user corresponding to the receiver ID
   const receiverUser = userList.find(user => user.id === receiver);
   const receiverEmail = receiverUser ? receiverUser.uid : "";
     
@@ -60,9 +61,19 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
         body: message.trim(),
       };
 
-      const response = await axios.post(`${API_URL}/messages`, messageInfo, {
-        headers: userHeaders,
-      });
+      const messageChannelInfo = {
+        receiver_id: Number(channelName.id),
+        receiver_class: "Channel",
+        body: message.trim(),
+      };
+
+     let response;
+      
+     response = selectedTab === "primary"
+     ? await axios.post(`${API_URL}/messages`, messageInfo, { headers: userHeaders })
+     : selectedTab === "channels"
+     ? await axios.post(`${API_URL}/messages`, messageChannelInfo, { headers: userHeaders })
+     : null
 
       const { data } = response; // Destructure response (get data object)
       if (data.data) {
@@ -136,14 +147,27 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
             <div>No messages</div>
           )}
         </div>
+        <form className="chat-input" onSubmit={handleSend}>
+        <input
+          type="text"
+          placeholder="Type a message..."
+          autoComplete="off"
+          spellCheck="false"
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+        />
+        <button type="submit" className="send-button">
+          <BsSend />
+        </button>
+      </form>
         </div>
       )}
 
       {selectedTab === "channels" && (
         <div className="channels-chat-container">
           <div className="name-display">
-            <span>Select a user or channel</span>
-          </div> 
+            <span>#{channelName.name}</span>
+            </div> 
           <div className="chat-messages">
           {mgaChannelMessages && mgaChannelMessages.length > 0 ? (
             mgaChannelMessages.map((msg) =>
@@ -161,23 +185,8 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
           ) : (
             <div>No messages sa archives</div>
           )}
-          
         </div>
-        </div>
-      )}
-
-      {selectedTab === "archived" && (
-        <div className="archived-chat-container">
-          <div className="name-display">
-            <span>Archived messages</span>
-          </div> 
-          <div className="chat-messages">
-            <div>No messages sa channel</div>
-          </div>
-        </div>
-      )}
-
-      <form className="chat-input" onSubmit={handleSend}>
+          <form className="chat-input" onSubmit={handleSend}>
         <input
           type="text"
           placeholder="Type a message..."
@@ -190,6 +199,34 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
           <BsSend />
         </button>
       </form>
+        </div>
+      )}
+
+      {selectedTab === "archived" && (
+        <div className="archived-chat-container">
+          <div className="name-display">
+            <span>Archived Messages</span>
+          </div> 
+          <div className="chat-messages">
+            <div>No archived messages.</div>
+          </div>
+          <form className="chat-input" onSubmit={handleSend}>
+        <input
+          type="text"
+          placeholder="Type a message..."
+          autoComplete="off"
+          spellCheck="false"
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+        />
+        <button type="submit" className="send-button">
+          <BsSend />
+        </button>
+      </form>
+        </div>
+      )}
+
+      
     </div>
   );
 }

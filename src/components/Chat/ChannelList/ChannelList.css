@@ -20,22 +20,24 @@ align-items: flex-start;
     cursor: pointer;
     width: 180px;
     user-select: none;
+    display: flex;
+    justify-content: space-between;
 }
 .add-channel-icon {
    cursor: pointer;
    margin-left: 5px;
    margin-top: 7px;
 }
-.remove-channel-icon {
-    cursor: pointer;
-    margin-top: 3px;
-    margin-right: 5px;
-    color: hsla(0, 0%, 50%, 0.0);
-}
 
-.remove-channel-icon:hover {
-    transition: color 0.3s ease;
-    color: hsla(0, 0%, 50%, 0.7);
+.add-user-icon:hover {
+  color: hsla(0, 0%, 96%, 0.822);
+ }
+ 
+
+.add-user-icon {
+    width: 24px;
+    height: auto;
+    margin-right: 5px;
 }
 
 .channels ul li {
@@ -47,4 +49,86 @@ align-items: flex-start;
     padding: 16px;
 }
 
+.add-user-container {
+    width: 350px; 
+    max-height: 400px; 
+    overflow-y: auto; 
+    margin-top: 8px;
+    /* border: 1px solid #ddd; */
+    border-radius: 8px;
+    padding: 10px;
+    background-color: hsl(230, 15%, 16%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-user-container h3 {
+    margin-left: 8px;
+  }
 
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: hsl(230, 15%, 16%);
+  }
+  
+  .user-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    padding: 2px 8px;
+    background-color: #888;
+  }
+  
+  .user-item label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .add-user-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .add-user-container::-webkit-scrollbar-track {
+    background: #494c55;
+    border-radius: 10px;
+  }
+  
+  .add-user-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .add-user-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .buttons {
+  display: flex;  
+  justify-content: space-between;
+  }
+
+  .buttons button {
+    margin: 10px 5px;
+    padding: 8px 5px;
+    background-color: hsla(225, 100%, 50%, 0.55);
+    border-radius: 4px;
+    cursor: pointer;
+    /* text-align: center; */
+    border: none;
+    height: 100%;
+    font-size: 12px;
+    width: 50%;
+    color: whitesmoke;
+  }
+  
+  .buttons button:hover {
+    background-color: hsl(225, 100%, 50%);
+  }

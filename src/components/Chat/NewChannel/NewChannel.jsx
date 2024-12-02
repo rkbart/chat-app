@@ -2,11 +2,13 @@ import "../NewChannel/NewChannel.css";
 import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { useState } from "react";
+import { API_URL } from "../../../constants/Constants.jsx";
 
 function NewChannel({  onCancel, addUser, setAddUser, userList }) {
   const { idHolder } = useData();
   const [channelName, setChannelName] = useState("");
   const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const { userHeaders } = useData();
   
   // const [userIds, setUserIds] = useState([]);
 
@@ -17,29 +19,35 @@ function NewChannel({  onCancel, addUser, setAddUser, userList }) {
       console.log(channelName)
       console.log(idHolder)
     }
-    // try {
-    //   const channelRequestBody = {
-    //     "name": channelName,
-    //     "user_ids": []
-    //   }
-
-    // } catch {
-
-    // }
     
+    try {
+      const channelRequestBody = {
+        "name": channelName,
+        "user_ids": selectedUserIds
+      };
+
+      await axios.post(`${API_URL}/channels`, channelRequestBody, {headers: userHeaders});
+
+    } catch(error) {
+      console.log(error);
+    };
+    setChannelName("");
+    setSelectedUserIds("");
+    onCancel();
   }
     
   const handleCheckboxChange = (userId) => {
     setSelectedUserIds((prevSelected) =>
       prevSelected.includes(userId)
-        ? prevSelected.filter((id) => id !== userId) // Remove if already selected
-        : [...prevSelected, userId] // Add if not selected
+        ? prevSelected.filter((id) => id !== userId) 
+        : [...prevSelected, userId] 
     );
   };
 
   return (
     <div className="backdrop">
-    <form className="new-channel-container">
+    <form className="new-channel-container"
+          onSubmit={handleAdd}>
       <input
         type="text"
         placeholder="Enter channel name"
@@ -49,15 +57,15 @@ function NewChannel({  onCancel, addUser, setAddUser, userList }) {
         onChange={(e) => setChannelName(e.target.value)}
       />
       <div id="buttons">
-        <button onClick={handleAdd}>Add Channel</button>
+        <button>Add Channel</button>
       </div>
     </form>
         {/* <button onClick={onCancel}>Cancel</button> */}
         {addUser && (
         <div className="select-user-container">
-          <h3>Select Users</h3>
+          <h3>Add Users</h3>
           <ul className="user-list">
-            {userList.map((individual, index) => {
+            {userList.map((individual) => {
               const { id, email } = individual;
               const username = email.split("@")[0];
               return (
