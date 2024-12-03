@@ -12,6 +12,7 @@ function Main() {
   const [channelName, setChannelName] = useState({ name: "", id: "" });
   const [inbox, setInbox] = useState([]);
   const [selectedTab, setSelectedTab] = useState("primary");
+  const [userAvatars, setUserAvatars] = useState([]);
   
   const handleChatRoom = (channel) => {
     setChatRoom(channel);
@@ -34,6 +35,7 @@ function Main() {
         setReceiver={setReceiver}
         setInbox={setInbox}
         setUserList={setUserList}
+        setUserAvatars={setUserAvatars}
         />
 
       <div className="main-pos">
@@ -48,11 +50,13 @@ function Main() {
                           selectedTab={selectedTab} 
                           setSelectedTab={setSelectedTab}
                           userList={userList}
-          />
+                          
+                          />
           <ChatWindow receiver={receiver} 
                       userList={userList} 
                       channelName={channelName}
-                      selectedTab={selectedTab}/>
+                      selectedTab={selectedTab}
+                      userAvatars={userAvatars}/>
         </div>  
       </div> 
     </div>

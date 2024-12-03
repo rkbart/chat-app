@@ -1,17 +1,22 @@
 .chat-header {
-    padding: 16px;
+    padding: 10px;
     background-color: #23252f;
     border-radius: 15px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     color: white;
 }
 
-.right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+.chat-header span{
+    margin-right: 8px;
+}
+
+.chat-header span img {
+    width: 40px;
+    background-color: #888;
+    border-radius: 45px;
+    padding: 2px;
+    /* border: 1px solid black; */
 }

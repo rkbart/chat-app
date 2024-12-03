@@ -1,24 +1,23 @@
 import "./ChatWindow.css";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
 
-function ChatWindow({ receiver, userList, channelName, selectedTab }) {
+function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars }) {
   console.log("Channel name in ChatWindow:", channelName);
-  console.log("Props in ChatWindow - Channel Name:", channelName);
+  console.log("Props in ChatWindow - ChannelName:", channelName);
   console.log("Props in ChatWindow - Receiver:", receiver);
-
+  
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
   const [mgaMessages, setMgaMessages] = useState([]);
   const [mgaChannelMessages, setMgaChannelMessages] = useState([]);
   
-
-   // Find the user corresponding to the receiver ID
-  const receiverUser = userList.find(user => user.id === receiver);
-  const receiverEmail = receiverUser ? receiverUser.uid : "";
+  const receiverIndex = userList.findIndex(user => user.id === receiver);
+  const receiverAvatar = receiverIndex !== -1 ? userAvatars[receiverIndex] : null;
+  const receiverUser = receiverIndex !== -1 ? userList[receiverIndex] : null;
     
   useEffect(() => {
     const fetchMessages = async () => {
@@ -54,6 +53,16 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
     e.preventDefault();
     if (!message.trim()) return; // Prevent sending empty or whitespace-only messages
 
+    // Create a temporary message with a unique ID
+    const tempMessage = {
+      id: `temp-${Date.now()}`, // Temporary unique ID
+      body: message.trim(),
+      sender: { id: userHeaders.uid }, // Replace with your sender logic
+  };
+    // Optimistically update the message list
+    setMgaMessages((prevMessages) => [...prevMessages, tempMessage]);
+    setMessage(""); // Clear input field immediately
+
     try {
       const messageInfo = {
         receiver_id: Number(receiver),
@@ -79,17 +88,23 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
       if (data.data) {
         const newMessage = data.data;
 
-        if (newMessage && newMessage.id && newMessage.body) {
+        //if (newMessage && newMessage.id && newMessage.body) {
           // Add new valid message and deduplicate
-          setMgaMessages((prevMessages) => {
-            const allMessages = [...prevMessages, newMessage];
-            return allMessages.filter(
-              (msg, index, self) =>
-                index === self.findIndex((m) => m.id === msg.id)
+         // setMgaMessages((prevMessages) => {
+          //  const allMessages = [...prevMessages, newMessage];
+           // return allMessages.filter(
+            //  (msg, index, self) =>
+            //    index === self.findIndex((m) => m.id === msg.id)
+           // );
+          //});
+       // }
+        //setMessage(""); // Clear input field
+        // Replace the temporary message with the server response
+            setMgaMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    msg.id === tempMessage.id ? newMessage : msg
+                )
             );
-          });
-        }
-        setMessage(""); // Clear input field
       }
 
       if (data.errors) {
@@ -97,6 +112,10 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
       }
     } catch (error) {
       console.error("Error sending message:", error);
+      // Remove the temporary message if the API call fails
+      setMgaMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== tempMessage.id)
+    );
     }
   };
 
@@ -119,6 +138,23 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
     }
   },[channelName, userHeaders])
 
+  const messagesEndRef = useRef(null);
+
+  // scroll to bottom of chat
+  const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+  };
+
+  useEffect(() => {
+      scrollToBottom(); 
+  }, [mgaMessages, mgaChannelMessages]); 
+
+  // runs only once after component mounts
+  //useEffect(() => {
+     // scrollToBottom(); 
+ // }, []); 
+
+
 
   return (
     <div className="chat-window">
@@ -126,7 +162,11 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
       {selectedTab === "primary" && (
         <div className="primary-chat-container">
           <div className="name-display">
-          {receiverUser ? <span>{receiverEmail}</span> : <span>Select a user or channel</span>}
+          {receiverAvatar ? (
+                    <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="avatar" />
+                ) : null}
+                {receiverUser ? <span>{receiverUser.email}</span> : <span>Select a user or channel</span>}
+            
         </div>
         
         <div className="chat-messages">
@@ -145,7 +185,8 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
             )
           ) : (
             <div>No messages</div>
-          )}
+          )} 
+          <div ref={messagesEndRef} />
         </div>
         <form className="chat-input" onSubmit={handleSend}>
         <input
@@ -175,9 +216,10 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
                 <div
                   key={msg.id}
                   className={`chat-bubble ${
-                    msg.sender?.id === receiver ? "receiver" : "sender"
+                    msg.sender?.uid === userHeaders.uid ? "sender" : "receiver"
                   }`}
                 >
+                  {<strong>{msg.sender.uid.split("@")[0]}: </strong>}
                   {msg.body}
                 </div>
               ) : null
@@ -185,6 +227,7 @@ function ChatWindow({ receiver, userList, channelName, selectedTab }) {
           ) : (
             <div>No messages sa archives</div>
           )}
+          <div ref={messagesEndRef} />
         </div>
           <form className="chat-input" onSubmit={handleSend}>
         <input

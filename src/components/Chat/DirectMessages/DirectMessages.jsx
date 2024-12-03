@@ -4,17 +4,20 @@ import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { API_URL } from "../../../constants/Constants.jsx";
 
-function DirectMessages({ setReceiver,setInbox,setUserList }) {
+function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
     const { userHeaders } = useData();
     const [userList, setLocalUserList] = useState([]);
-    const [userAvatars, setUserAvatars] = useState([]);
+    // const [userAvatars, setUserAvatars] = useState([]);
+    const [localUserAvatars, setLocalUserAvatars] = useState([]);
     
     const getUsers = async () => {
 
         try {
           const response = await axios.get(`${API_URL}/users`,  { headers : userHeaders });
           const users = response.data.data;
-          const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") && user.email !== "ryan.kristopher.bartolome@gmail.com");
+          const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") 
+          && user.email !== userHeaders.uid);
+          // && user.email !== "ryan.kristopher.bartolome@gmail.com");
           setUserList(filteredUsers);
           setLocalUserList(filteredUsers);
           
@@ -22,6 +25,7 @@ function DirectMessages({ setReceiver,setInbox,setUserList }) {
             return `https://robohash.org/${user.email}.png?set=set4`; // Unique avatar URL
           });
           setUserAvatars(avatars);
+          setLocalUserAvatars(avatars);
           
           //get user's objects (need to filter our empty objects)
           for (const user of users) {
@@ -66,7 +70,7 @@ function DirectMessages({ setReceiver,setInbox,setUserList }) {
                 userList &&
                 userList.map((individual,index) => {
                 const { id, email } = individual;
-                const avatar = userAvatars[index];
+                const avatar = localUserAvatars[index];
                 const username = email.split("@")[0];
                 return (
                     <li key={id}

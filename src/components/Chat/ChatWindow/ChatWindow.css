@@ -28,8 +28,13 @@
     margin-top: -8px;               
   }
 
+  .name-display img {
+    width: 24px;
+    margin-right: 8px;
+  }
+
   .chat-messages {
-    /* flex: 1; */
+    flex: 1;
     padding-bottom: 8px;
     overflow-y: auto;
     justify-content: center;
@@ -87,8 +92,7 @@
   }
   
   .chat-bubble.receiver {
-    background-color: #23252fd0;
-    /* background-color: var(--bubble-receiver); */
+    background-color: hsla(230, 15%, 16%, 0.816);
     align-self: flex-start;
     user-select: none; 
     color: whitesmoke;
@@ -138,3 +142,8 @@
     background-color: hsl(225, 100%, 50%);
     color: whitesmoke;
   }
+
+  /* .chat-bubble.pending {
+    opacity: 0.6;
+    font-style: italic;
+} */

@@ -10,7 +10,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
-function Sidebar({ setReceiver, setInbox, setUserList}) {
+function Sidebar({ setReceiver, setInbox, setUserList,setUserAvatars}) {
 
   const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ function Sidebar({ setReceiver, setInbox, setUserList}) {
         setReceiver={setReceiver} 
         setInbox={setInbox}
         setUserList={setUserList}
+        setUserAvatars={setUserAvatars}
         />
      <div className="logout-container"
             onClick={handleLogout}>
