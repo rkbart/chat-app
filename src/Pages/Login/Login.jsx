@@ -1,6 +1,6 @@
 import "./Login.css";
 import google from "../../assets/google.png";
-import apple from "../../assets/apple.png";
+import { SiGithub } from "react-icons/si";
 import { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../constants/Constants";
@@ -41,8 +41,7 @@ function Login({onLogin}) {
 
           } catch(error) {
             if(error.response.data.errors) {
-            //   return alert("Invalid credentials");
-            return toast.error("Invalid credentials");
+                return toast.error("Invalid credentials");
             }
            }
         };
@@ -95,7 +94,7 @@ function Login({onLogin}) {
       const handleGoogleLogin = () => {
         const gmail = "ryan.kristopher.bartolome@gmail.com";
         const gmailPassword = "password";
-        toast.success("Logging in using Google account.");
+        toast.success("Logging in using Quick log in.");
         handleLogin(gmail,gmailPassword);
     };
     
@@ -122,10 +121,10 @@ function Login({onLogin}) {
                         </div>
 
                         <div className="option" 
-                             onClick={() => toast.info("Feature not yet available")}>
+                             onClick={handleGoogleLogin}>
                             <a href="#">
-                                <img src={apple} alt="Apple" />
-                                <span>Apple</span>
+                                <SiGithub className="github-icon" />
+                                <span>GitHub</span>
                             </a>
                         </div>
                     </div>

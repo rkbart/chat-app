@@ -3,12 +3,14 @@ import { MdPlaylistAdd } from "react-icons/md";
 import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
 import { useState, useEffect } from "react";
 import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
+import { useData } from "../../context/DataProvider.jsx";
+// import DataProvider from "../../context/DataProvider.jsx";
 
 function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect, userList  }) {
-  // const [selectedTab, setSelectedTab] = useState("primary");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addUser,setAddUser] = useState(false);
-  
+  const { userHeaders } = useData();
+
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
@@ -36,16 +38,23 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
     setIsModalOpen(false); // Close the modal
   };
 
- const getLatestMessages = (inbox) => {
+  const getLatestMessages = (inbox) => {
     if (!Array.isArray(inbox)) return [];
-
+  
     const sortedInbox = inbox.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     const latestMessagesMap = new Map();
+  
     sortedInbox.forEach((message) => {
-      if (message?.sender?.uid !== "ryan.kristopher.bartolome@gmail.com" && message?.sender?.id && !latestMessagesMap.has(message.sender.id)) {
+      // Exclude messages sent by the current user to themselves
+      if (
+        message?.sender?.uid !== userHeaders.id && // Exclude self-sent messages
+        message?.sender?.id && 
+        !latestMessagesMap.has(message.sender.id)
+      ) {
         latestMessagesMap.set(message.sender.id, message);
       }
     });
+  
     return Array.from(latestMessagesMap.values());
   };
 
@@ -67,7 +76,7 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
           className={selectedTab === "primary" ? "tab selected" : "tab"}
           onClick={() => handleTabClick("primary")}
         >
-          Primary
+          Inbox
         </button>
         <button
           className={selectedTab === "channels" ? "tab selected" : "tab"}
@@ -87,7 +96,9 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
         <div className="primary-container">
           <ul>
             {latestMessages.length > 0 ? (
-              latestMessages.map((message, index) => (
+              latestMessages
+                .filter((message) => message.sender.uid !== userHeaders.uid) // Filter out messages from self
+                .map((message, index) => (
                 <li key={index} 
                     className="message-item"
                     onClick={() => handleInboxClick(message.sender.id)}>

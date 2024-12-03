@@ -7,7 +7,6 @@ import { API_URL } from "../../../constants/Constants.jsx";
 function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
     const { userHeaders } = useData();
     const [userList, setLocalUserList] = useState([]);
-    // const [userAvatars, setUserAvatars] = useState([]);
     const [localUserAvatars, setLocalUserAvatars] = useState([]);
     
     const getUsers = async () => {
@@ -62,29 +61,26 @@ function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
       setReceiver(id); // update the receiver in the parent component
     };
         
-      return (
-        <div className="direct-messages">
-          {/* <h3>Direct Messages</h3> */}
-            <ul>
-            {
-                userList &&
-                userList.map((individual,index) => {
-                const { id, email } = individual;
-                const avatar = localUserAvatars[index];
-                const username = email.split("@")[0];
-                return (
-                    <li key={id}
-                        onClick={() => handleReceiver(id)}>
-                        <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
-                        <p>{username}</p>
-                    </li>
-                    )
-                })
-            } 
-          </ul>
-          
-        </div>
-    )
+    return (
+      <div className="direct-messages">
+      <ul>
+        {userList &&
+          userList.map((individual,index) => {
+          const { id, email } = individual;
+          const avatar = localUserAvatars[index];
+          const username = email.split("@")[0];
+          return (
+            <li key={id}
+              onClick={() => handleReceiver(id)}>
+              <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
+              <p>{username}</p>
+            </li>
+            )
+          })
+        } 
+      </ul>
+    </div>
+  )
 }
 
 export default DirectMessages;

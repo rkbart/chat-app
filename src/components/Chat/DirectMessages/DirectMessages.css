@@ -4,11 +4,10 @@
     width: 160px; /* Keep the width as it was */
   }
   
-  /* Apply scrollbar styles to the message list */
   .direct-messages ul {
     max-height: 410px;
     width: 200px;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto; 
     overflow-x: hidden; /* Prevent horizontal scrolling */
     padding: 8px;
     margin: 0;

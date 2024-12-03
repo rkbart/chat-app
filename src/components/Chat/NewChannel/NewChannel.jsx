@@ -57,10 +57,9 @@ function NewChannel({  onCancel, addUser, setAddUser, userList }) {
         onChange={(e) => setChannelName(e.target.value)}
       />
       <div id="buttons">
-        <button>Add Channel</button>
+        <button>Save Channel</button>
       </div>
     </form>
-        {/* <button onClick={onCancel}>Cancel</button> */}
         {addUser && (
         <div className="select-user-container">
           <h3>Add Users</h3>

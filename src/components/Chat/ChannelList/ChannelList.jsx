@@ -5,6 +5,8 @@ import NewChannel from "../NewChannel/NewChannel.jsx";
 import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
  
@@ -28,7 +30,7 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
     
     } catch(error) {
       if(error.response?.data?.errors){
-        alert("Cannot get channels.");
+        return toast.error("Cannot get channels.");
       }
     }
   }
@@ -38,15 +40,6 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
       }
     },[]
   );
-  
-  function handleAddChannel() {
-
-    if (channelsList.length < 5) {
-      setAddChannelVisible(true);
-    } else {
-      alert("You can only create 5 channels.")
-    }
-  }
   
   function handleCancel() {
     setAddChannelVisible(false);
@@ -64,14 +57,14 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
     e.preventDefault();
     console.log(`array ng selectedUserIds: ${selectedUserIds}`)
     console.log("selected Channel ito:", selectedChannel)
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); 
   };
 
   const handleCheckboxChange = (userId) => {
     setSelectedUserIds((prevSelected) =>
       prevSelected.includes(userId)
-        ? prevSelected.filter((id) => id !== userId) // Unselect if already selected
-        : [...prevSelected, userId] // Select new user
+        ? prevSelected.filter((id) => id !== userId) // unselect if already selected
+        : [...prevSelected, userId] // select new user
     );
   };
 
@@ -86,12 +79,12 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
         `${API_URL}/channel/add_member`,info,{ headers: userHeaders }
       );}
 
-      alert("Users added successfully!");
+      toast.success("Users added successfully!");
       setSelectedUserIds([]);
-      setIsModalOpen(false); // Close the modal
+      setIsModalOpen(false); 
     } catch (error) {
       console.error(error);
-      alert("Failed to add users.");
+      return toast.error("Failed to add users.");
     }
   };
 

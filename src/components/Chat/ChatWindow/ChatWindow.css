@@ -25,7 +25,8 @@
     width: 100%;              
     color: white;
     margin-bottom: 8px;
-    margin-top: -8px;               
+    margin-top: -8px;         
+    user-select: none;      
   }
 
   .name-display img {

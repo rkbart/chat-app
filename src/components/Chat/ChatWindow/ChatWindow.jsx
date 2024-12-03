@@ -88,17 +88,6 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
       if (data.data) {
         const newMessage = data.data;
 
-        //if (newMessage && newMessage.id && newMessage.body) {
-          // Add new valid message and deduplicate
-         // setMgaMessages((prevMessages) => {
-          //  const allMessages = [...prevMessages, newMessage];
-           // return allMessages.filter(
-            //  (msg, index, self) =>
-            //    index === self.findIndex((m) => m.id === msg.id)
-           // );
-          //});
-       // }
-        //setMessage(""); // Clear input field
         // Replace the temporary message with the server response
             setMgaMessages((prevMessages) =>
                 prevMessages.map((msg) =>

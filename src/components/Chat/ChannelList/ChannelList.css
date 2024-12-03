@@ -27,22 +27,30 @@ align-items: flex-start;
    cursor: pointer;
    margin-left: 5px;
    margin-top: 7px;
+   color: hsl(0, 0%, 80%);
 }
 
-.add-user-icon:hover {
-  color: hsla(0, 0%, 96%, 0.822);
- }
+.add-user-icon:hover, .add-channel-icon:hover {
+  color: hsl(0, 0%, 100%);
+}
  
 
 .add-user-icon {
     width: 24px;
     height: auto;
     margin-right: 5px;
+    color: hsl(0, 0%, 80%);
 }
 
 .channels ul li {
     list-style: none;
-    padding: 8px;
+    padding: 8px;    
+    border-bottom: 1px solid #ccc;
+
+}
+
+.channels ul li:hover {
+  background: #555
 }
 
 .channels ul {
@@ -51,9 +59,6 @@ align-items: flex-start;
 
 .add-user-container {
     width: 350px; 
-    /* max-height: 400px; 
-    overflow-y: auto; 
-    overflow-x: hidden; */
     margin-top: 8px;
     border-radius: 8px;
     padding: 16px 24px;

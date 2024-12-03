@@ -1,22 +1,23 @@
 .details-section {
-    width: 30%;
-    background-color:  hsl(230, 15%, 16%);
-    /* border-left: 1px solid #ddd; */
-    padding: 16px;
-    /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); */
-    height: 77.5vh;
-    border-radius: 15px;
-    /* display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center; */
-    color: white;
+  width: 30%;
+  max-width: 350px;
+  min-width: 250px;
+  background-color: hsl(230, 15%, 16%);
+  padding: 16px;
+  height: 77.5vh;
+  border-radius: 15px;
+  color: white;
+  overflow-x: hidden;
  }
-  
- .title-container {
+ .primary-container, .channel-list-container, .archive-container {
+  width: 100%; 
+}
+ 
+.title-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  user-select: none;
  }
 
  
@@ -41,18 +42,19 @@
  }
 
  .tabs {
+  
   display: flex;
   justify-content: center;
-  background-color: hsl(230, 10%, 20%) ;
+  background-color: hsl(230, 10%, 20%);
   border-radius: 5px;
-  margin: 8px 0px;
-  padding: 0px 3px;
-  /* text-align: center; */
+  margin: 8px 0;
+  padding: 0px 5px;
  }
 
  .tabs button {
+  flex: 1 1 auto;
   margin: 6px 3px;
-  padding: 5px 8px;
+  padding: 5px 3px;
   border: none;
   background-color: transparent;
   color: hsla(0, 9%, 76%, 0.664);
@@ -63,79 +65,45 @@
 
  .tabs button:hover {
   background-color: hsla(0, 0%, 90%, 0.2);
-  border-radius: 5px;
-  padding: 5px 8px;
   transition: 0.3s ease;
- }
-
- 
- .tabs button:focus {
-  background-color: hsla(0, 0%, 90%, 0.2);
-  border-radius: 5px;
-  padding: 5px 8px;
-  color: hsla(239, 100%, 50%, 0.5);
- } 
-
- .button-selected {
-  background-color: hsla(0, 0%, 90%, 0.2);
-  border-radius: 5px;
-  padding: 5px 8px;
-  color: hsla(239, 100%, 58%, 0.664);
+  padding: 5px 3px;
  }
 
  .channel-list-container {
-    max-height: 350px;
-    width: 100%;
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    padding: 8px;
-    margin: 0;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
- }
-
-#logo {
-  width: 120px;
-  margin-top: 15px;
-  border-radius: 10px;
-}
-
-.details-section p {
-  text-align: center;
-  margin-top: 10px;
+  max-height: 350px;
+  overflow-y: auto; 
+  overflow-x: hidden;
+  word-wrap: break-word; 
 }
 
 .primary-container ul{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   list-style: none;
   font-size: 12px;
   max-height: 370px;
   overflow-y: auto;
   
-  scrollbar-width: thin; /* For Firefox */
+  scrollbar-width: thin; 
   scrollbar-color: #888 transparent;
 }
 
-.primary-container::-webkit-scrollbar {
+.primary-container ul::-webkit-scrollbar {
   width: 8px; /* Width of the scrollbar */
 }
 
-.primary-container::-webkit-scrollbar-track {
+.primary-container ul::-webkit-scrollbar-track {
   background: #494c55; /* Match the background color */
   border-radius: 10px; /* Round corners of the track */
 }
 
-.primary-container::-webkit-scrollbar-thumb {
+.primary-container ul::-webkit-scrollbar-thumb {
   background: #888; /* Color of the scrollbar thumb */
   border-radius: 10px; /* Round corners of the thumb */
 }
 
-.primary-container::-webkit-scrollbar-thumb:hover {
+.primary-container ul::-webkit-scrollbar-thumb:hover {
   background: #555; /* Darker color on hover */
 }
 .message-item {
@@ -145,9 +113,13 @@
   background-color: #494c55;
   width: 100%;
   padding: 8px;
-  border-radius: 10px;
-  margin: 2px 0;
+  border-bottom: 1px solid hsl(0, 0%, 50%);
+  user-select: none;
   cursor: pointer;
+}
+
+.message-item:hover {
+  background-color: hsl(225, 8%, 25%);
 }
 
 .archive-container h4 {
@@ -164,33 +136,22 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(10px);
+  animation: blur-in 0.5s ease forwards;
 }
 
-/* Modal Content */
-/* .modal-content {
-  background: black;
-  border-radius: 8px;
-  padding: 20px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: scale-up 0.3s ease;
-} */
-
-/* Animation for modal appearance */
-@keyframes scale-up {
+@keyframes blur-in {
   0% {
-    transform: scale(0.9);
-    opacity: 0;
+    backdrop-filter: blur(0px);
+    background-color: rgba(0, 0, 0, 0); 
   }
   100% {
-    transform: scale(1);
-    opacity: 1;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5); 
   }
 }
