@@ -118,6 +118,17 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="add-user-container">
             <h3>Add Users to Channel</h3>
+            <label>
+          <input
+            type="checkbox"
+            checked={userList.length > 0 && selectedUserIds.length === userList.length}
+            onChange={(e) => {
+              const isChecked = e.target.checked;
+              setSelectedUserIds(isChecked ? userList.map((user) => user.id) : []);
+            }}
+          />
+          Select All
+        </label>
             <ul className="user-list">
               {userList.map((individual) => {
                 const { id, email } = individual;

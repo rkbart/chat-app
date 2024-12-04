@@ -138,13 +138,7 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
       scrollToBottom(); 
   }, [mgaMessages, mgaChannelMessages]); 
 
-  // runs only once after component mounts
-  //useEffect(() => {
-     // scrollToBottom(); 
- // }, []); 
-
-
-
+  
   return (
     <div className="chat-window">
       

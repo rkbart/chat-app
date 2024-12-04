@@ -44,6 +44,18 @@ function NewChannel({  onCancel, addUser, setAddUser, userList }) {
     );
   };
 
+  const handleSelectAllChange = (isChecked) => {
+    if (isChecked) {
+      // Select all user IDs
+      const allUserIds = userList.map((user) => user.id);
+      setSelectedUserIds(allUserIds);
+    } else {
+      // Deselect all
+      setSelectedUserIds([]);
+    }
+  };
+  
+
   return (
     <div className="backdrop">
     <form className="new-channel-container"
@@ -62,7 +74,17 @@ function NewChannel({  onCancel, addUser, setAddUser, userList }) {
     </form>
         {addUser && (
         <div className="select-user-container">
-          <h3>Add Users</h3>
+          <div className="header-with-select-all">
+            <h3>Add Users</h3>
+            <label>
+            <input
+              type="checkbox"
+              checked={userList.length > 0 && selectedUserIds.length === userList.length}
+              onChange={(e) => handleSelectAllChange(e.target.checked)}
+            />
+              Select All
+            </label>
+          </div>
           <ul className="user-list">
             {userList.map((individual) => {
               const { id, email } = individual;
