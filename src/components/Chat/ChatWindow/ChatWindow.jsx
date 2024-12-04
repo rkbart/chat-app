@@ -4,11 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
+import { FaUsers } from "react-icons/fa";
 
-function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars }) {
+function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars, channelMembers }) {
   console.log("Channel name in ChatWindow:", channelName);
   console.log("Props in ChatWindow - ChannelName:", channelName);
   console.log("Props in ChatWindow - Receiver:", receiver);
+  console.log("ChannelMembers in CHatWindow", channelMembers);
   
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
@@ -19,6 +21,8 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
   const receiverAvatar = receiverIndex !== -1 ? userAvatars[receiverIndex] : null;
   const receiverUser = receiverIndex !== -1 ? userList[receiverIndex] : null;
     
+  const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
+  
   useEffect(() => {
     const fetchMessages = async () => {
       if (!receiver) return;
@@ -138,15 +142,18 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
       scrollToBottom(); 
   }, [mgaMessages, mgaChannelMessages]); 
 
-  
-  return (
+  const handleDisplayMembers = () => {
+    setIsMembersModalOpen(true);
+  }
+
+ return (
     <div className="chat-window">
       
       {selectedTab === "primary" && (
         <div className="primary-chat-container">
           <div className="name-display">
           {receiverAvatar ? (
-                    <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="avatar" />
+                    <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="primary-avatar" />
                 ) : null}
                 {receiverUser ? <span>{receiverUser.email}</span> : <span>Select a user or channel</span>}
             
@@ -187,46 +194,50 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
         </div>
       )}
 
-      {selectedTab === "channels" && (
-        <div className="channels-chat-container">
-          <div className="name-display">
-            <span>#{channelName.name}</span>
-            </div> 
-          <div className="chat-messages">
-          {mgaChannelMessages && mgaChannelMessages.length > 0 ? (
-            mgaChannelMessages.map((msg) =>
-              msg ? (
-                <div
-                  key={msg.id}
-                  className={`chat-bubble ${
-                    msg.sender?.uid === userHeaders.uid ? "sender" : "receiver"
-                  }`}
-                >
-                  {<strong>{msg.sender.uid.split("@")[0]}: </strong>}
-                  {msg.body}
-                </div>
-              ) : null
-            )
-          ) : (
-            <div>No messages sa archives</div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-          <form className="chat-input" onSubmit={handleSend}>
-        <input
-          type="text"
-          placeholder="Type a message..."
-          autoComplete="off"
-          spellCheck="false"
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <button type="submit" className="send-button">
-          <BsSend />
-        </button>
-      </form>
-        </div>
+{selectedTab === "channels" && (
+  <div className="channels-chat-container">
+    <div className="name-display">
+      <span>{`#${channelName.name}`}</span>
+      <FaUsers className="view-users"
+               onClick={handleDisplayMembers}  />
+    </div>
+
+    <div className="chat-messages">
+      {mgaChannelMessages && mgaChannelMessages.length > 0 ? (
+        mgaChannelMessages.map((msg) =>
+          msg ? (
+            <div
+              key={msg.id}
+              className={`chat-bubble ${
+                msg.sender?.uid === userHeaders.uid ? "sender" : "receiver"
+              }`}
+            >
+              {<strong>{msg.sender.uid.split("@")[0]}: </strong>}
+              {msg.body}
+            </div>
+          ) : null
+        )
+      ) : (
+        <div>No messages available</div>
       )}
+      <div ref={messagesEndRef} />
+    </div>
+    <form className="chat-input" onSubmit={handleSend}>
+      <input
+        type="text"
+        placeholder="Type a message..."
+        autoComplete="off"
+        spellCheck="false"
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
+      />
+      <button type="submit" className="send-button">
+        <BsSend />
+      </button>
+    </form>
+  </div>
+)}
+
 
       {selectedTab === "archived" && (
         <div className="archived-chat-container">
@@ -251,7 +262,38 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars 
       </form>
         </div>
       )}
+  {isMembersModalOpen && (
+    <div className="modal-overlay" onClick={() => setIsMembersModalOpen(false)}>
+      <div className="members-container" onClick={(e) => e.stopPropagation()}>
+      <h3>{`#${channelName.name} members`}</h3>
+      {channelMembers && channelMembers.length > 0 ? (
+          channelMembers.map((member) => {
+            const matchedUser = userList.find((user) => user.id === member.user_id);
+            if (matchedUser) {
+              const avatarIndex = userList.findIndex((user) => user.id === matchedUser.id);
+              const avatar = avatarIndex !== -1 ? userAvatars[avatarIndex] : null;
 
+              return avatar ? (
+                <div key={member.id} className="avatar-container">
+                  <img src={avatar}
+                       alt={`${matchedUser.email}'s avatar`}
+                       className="members-avatar"
+                  />
+                  <div className="tooltip">
+                    {matchedUser.email || matchedUser.uid}
+                  </div>
+                </div>
+              ) : null;
+            }
+              return null;
+          })
+        ) : (
+          <span>Please select a channel</span>
+        )  
+        }     
+      </div>
+    </div>
+  )}
       
     </div>
   );

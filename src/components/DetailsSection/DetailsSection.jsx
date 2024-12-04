@@ -6,7 +6,7 @@ import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
 import { useData } from "../../context/DataProvider.jsx";
 // import DataProvider from "../../context/DataProvider.jsx";
 
-function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect, userList  }) {
+function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect, userList, setChannelMembers  }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addUser,setAddUser] = useState(false);
   const { userHeaders } = useData();
@@ -119,6 +119,7 @@ function DetailsSection({  selectedTab, setSelectedTab, onChannelSelect, inbox, 
                        userList={userList}
                        addUser={addUser}
                        setAddUser={setAddUser}
+                       setChannelMembers={setChannelMembers}
                         /> 
         </div>
       )}

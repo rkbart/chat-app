@@ -20,6 +20,7 @@
 .name-display {
   display: flex;
   justify-content: flex-start; 
+  gap: 10px;
   align-items: center;  
   font-size: 24px;
   width: 100%;              
@@ -31,7 +32,17 @@
 
 .name-display img {
   width: 24px;
-  margin-right: 8px;
+  /* margin-right: 8px; */
+}
+
+.view-users {
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.view-users:hover {
+  cursor: pointer;
+  opacity: .9;
 }
 
 .chat-messages {
@@ -152,4 +163,78 @@
   color: whitesmoke;
 }
 
- 
+.channel-members {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.members-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 8px; 
+}
+
+.channel-members span {
+  margin-top: -10px;
+}
+
+.members-container {
+  width: 500px;
+  height: 300px;
+  margin-top: 8px;
+  border-radius: 8px;
+  padding: 16px 24px;
+  background-color: hsl(230, 15%, 16%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid whitesmoke;
+}
+.members-container h3 {
+  margin-right: 8px;  
+}
+.avatar-container {
+  position: relative; /* Required for positioning the tooltip */
+  display: inline-block;
+  cursor: pointer;
+}
+
+.members-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.members-avatar:hover {
+  transform: scale(1.1); /* Optional zoom effect on hover */
+}
+
+.tooltip {
+  position: absolute;
+  bottom: -25px; /* Adjust to place tooltip below the avatar */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none; /* Prevent tooltip from interfering with hover */
+  user-select: none;
+}
+
+.avatar-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}

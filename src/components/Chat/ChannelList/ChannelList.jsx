@@ -8,7 +8,7 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
+function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannelMembers}) {
  
   const { userHeaders } = useData();
   const [channelsList, setChannelsList] = useState([]);
@@ -22,12 +22,11 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
     try {
       const response = await axios.get(`${API_URL}/channels`,  { headers : userHeaders });
       const channels = response.data.data;
-      console.log(channels)
+        console.log("list of channels: ", channels)
       if(channels) {
       setChannelsList(channels || []);
-    }
-        
-    
+      }
+      
     } catch(error) {
       if(error.response?.data?.errors){
         return toast.error("Cannot get channels.");
@@ -47,16 +46,31 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList}) {
 
   function selectChannel(channel) {
     console.log("Channel selected in ChannelList:", channel);
+    setSelectedChannel(channel.id)
+    getChannelDetails(channel.id)
+
     if (onChannelSelect) {
       onChannelSelect(channel); 
     }
-    setSelectedChannel(channel.id)
+  };
+  const getChannelDetails = async (channelId) => {
+    try {
+      const response = await axios.get(`${API_URL}/channels/${channelId}`, { headers: userHeaders });
+      const channelDetails = response.data.data;
+        console.log("Selected Channel ID:", channelId);
+        console.log("Channel Details:", channelDetails);
+        console.log("members: ", channelDetails.channel_members)
+      setChannelMembers(channelDetails.channel_members)
+    } catch (error) {
+        console.error("Error fetching channel details:", error);
+      toast.error("Cannot get channel details.");
+    }
   };
 
   const handleAddUserClick = (e) => {
     e.preventDefault();
-    console.log(`array ng selectedUserIds: ${selectedUserIds}`)
-    console.log("selected Channel ito:", selectedChannel)
+      console.log(`array ng selectedUserIds: ${selectedUserIds}`)
+      console.log("selected Channel ito:", selectedChannel)
     setIsModalOpen(true); 
   };
 

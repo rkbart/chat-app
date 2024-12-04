@@ -58,7 +58,6 @@ align-items: flex-start;
 }
 
 .add-user-container {
-    /* width: 350px;  */
     width: 100%;
     margin-top: 8px;
     border-radius: 8px;
@@ -78,27 +77,14 @@ align-items: flex-start;
   }
 
   .add-user-container ul {
-    /* list-style: none;
-    padding: 8px;
-    margin: 0;
-    background-color: hsl(230, 15%, 16%);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    max-height: 400px; 
-    overflow-y: auto; 
-    overflow-x: hidden;
-    scroll-behavior: smooth; */
     list-style: none;
     padding: 16px;
     margin: 0;
     background-color: hsl(230, 15%, 16%);
     width: 100%;
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
-    gap: 8px; /* Add space between items */
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px; 
     justify-content: center;
     align-items: flex-start;
     max-height: 400px;
@@ -154,7 +140,6 @@ align-items: flex-start;
     background-color: hsla(225, 100%, 50%, 0.55);
     border-radius: 4px;
     cursor: pointer;
-    /* text-align: center; */
     border: none;
     height: 100%;
     font-size: 12px;
@@ -165,3 +150,5 @@ align-items: flex-start;
   .buttons button:hover {
     background-color: hsl(225, 100%, 50%);
   }
+
+  
