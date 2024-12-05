@@ -22,8 +22,6 @@ function App() {
         <Routes>
           <Route path="/" 
                  element={<Login onLogin={handleLogin} />}/> 
-          {/* <Route path="/main" 
-                 element={<Main/>}/>  */}
           <Route
             path="/main"
             element={
@@ -35,10 +33,7 @@ function App() {
                 ) 
               } 
             />
-            {/* <Route index element={</>}></Route> */}
-            {/* <Route path="" element={</>}></Route> */}
-            {/* <Route path='*' element={<NotFound />} /> */}
-        </Routes>
+          </Routes>
       </BrowserRouter>
     </DataProvider>
   );

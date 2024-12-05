@@ -151,9 +151,8 @@ function Login({onLogin}) {
                 <div className="input_box">
                     <div className="password_title">
                         <label forHTML="password">Password</label>
-                        {!isSignUp && <a href="#" 
-                                         onClick={forgotPassword}
-                                         >Forgot Password?</a>}
+                        {/* {!isSignUp && <a href="#" onClick={forgotPassword}
+                            >Forgot Password?</a>} */}
                     </div>
 
                     <input 

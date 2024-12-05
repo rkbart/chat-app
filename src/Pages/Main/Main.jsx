@@ -38,6 +38,7 @@ function Main() {
         setUserList={setUserList}
         setUserAvatars={setUserAvatars}
         setSelectedTab={setSelectedTab}
+        channelMembers={channelMembers}
         />
 
       <div className="main-pos">

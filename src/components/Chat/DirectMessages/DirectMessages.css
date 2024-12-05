@@ -2,19 +2,19 @@
 .direct-messages {
     margin-top: 16px;
     width: 160px; /* Keep the width as it was */
+    
   }
   
   .direct-messages ul {
     max-height: 410px;
     width: 200px;
     overflow-y: auto; 
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden; 
     padding: 8px;
     margin: 0;
-    list-style-type: none; /* Remove default list styling */
-    
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #888 transparent; /* Scrollbar thumb color */
+    list-style-type: none; 
+    scrollbar-width: thin; 
+    scrollbar-color: #888 transparent; 
   }
   
   /* Customizing scrollbar for webkit browsers (Chrome, Safari, Edge) */
@@ -53,4 +53,26 @@
     width: 16px;
     height: auto;
   }
+
+  .search-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 175px;
+    gap: 8px;
+  }
+
+  .search-bar {
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px
+  }
   
+  .search-icon {
+    width: 32px;
+    height: auto;
+    margin-bottom: 8px;
+    margin-left: 8px;
+  }

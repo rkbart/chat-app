@@ -8,7 +8,7 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannelMembers}) {
+function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannelMembers, channelMembers}) {
  
   const { userHeaders } = useData();
   const [channelsList, setChannelsList] = useState([]);
@@ -83,6 +83,7 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
   };
 
   const handleSaveUsers = async () => {
+   
     try {
       for (const userId of selectedUserIds) {
         const info = {
@@ -92,8 +93,8 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
       await axios.post(
         `${API_URL}/channel/add_member`,info,{ headers: userHeaders }
       );}
-
-      toast.success("Users added successfully!");
+      
+      alert("User added successfully!");
       setSelectedUserIds([]);
       setIsModalOpen(false); 
     } catch (error) {
@@ -101,7 +102,7 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
       return toast.error("Failed to add users.");
     }
   };
-
+  
   return (
     <div className="channels">
       <ul>

@@ -182,7 +182,7 @@
 }
 
 .members-container {
-  width: 500px;
+  width: 600px;
   height: 300px;
   margin-top: 8px;
   border-radius: 8px;
@@ -232,9 +232,11 @@
   transition: opacity 0.2s ease, visibility 0.2s ease;
   pointer-events: none; /* Prevent tooltip from interfering with hover */
   user-select: none;
+  z-index: 1001;
 }
 
 .avatar-container:hover .tooltip {
   opacity: 1;
   visibility: visible;
+  /* z-index: 1001; */
 }

@@ -3,19 +3,19 @@ import React, { useState, useEffect } from "react";
 import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { API_URL } from "../../../constants/Constants.jsx";
+import { IoIosSearch } from "react-icons/io";
 
 function DirectMessages({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab }) {
     const { userHeaders } = useData();
     const [userList, setLocalUserList] = useState([]);
     const [localUserAvatars, setLocalUserAvatars] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     
     const getUsers = async () => {
 
         try {
           const response = await axios.get(`${API_URL}/users`,  { headers : userHeaders });
           const users = response.data.data;
-          // const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") 
-          // && user.email !== userHeaders.uid);
           const filteredUsers = users.filter(user => user.email !== userHeaders.uid);
           
           setUserList(filteredUsers);
@@ -62,12 +62,26 @@ function DirectMessages({ setReceiver, setInbox, setUserList, setUserAvatars, se
       setSelectedTab("primary");
       console.log("setReceiver(id) in DM: ", id)
     };
+
+  const filteredUsers = userList.filter(user =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
         
     return (
       <div className="direct-messages">
+        <div className="search-bar-container">
+          <IoIosSearch className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search Users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-bar"
+          />
+        </div>
       <ul>
-        {userList &&
-          userList.map((individual,index) => {
+      {filteredUsers.map((individual, index) => {
           const { id, email } = individual;
           const avatar = localUserAvatars[index];
           const username = email.split("@")[0];
