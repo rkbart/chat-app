@@ -1,12 +1,8 @@
 import "./Sidebar.css";
 import DirectMessages from "../Chat/DirectMessages/DirectMessages.jsx";
-import { PiChatsThin } from "react-icons/pi"; 
-import { IoCallSharp } from "react-icons/io5"; 
 import { RiContactsBook3Line } from "react-icons/ri";
-import { IoSettingsOutline } from "react-icons/io5";
-import { TbSearch } from "react-icons/tb";
 
-function Sidebar({ setReceiver, setInbox, setUserList,setUserAvatars}) {
+function Sidebar({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab }) {
 
  return (
     <div className="sidebar">
@@ -21,6 +17,7 @@ function Sidebar({ setReceiver, setInbox, setUserList,setUserAvatars}) {
         setInbox={setInbox}
         setUserList={setUserList}
         setUserAvatars={setUserAvatars}
+        setSelectedTab={setSelectedTab}
         />
      
     </div>

@@ -4,7 +4,7 @@ import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { API_URL } from "../../../constants/Constants.jsx";
 
-function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
+function DirectMessages({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab }) {
     const { userHeaders } = useData();
     const [userList, setLocalUserList] = useState([]);
     const [localUserAvatars, setLocalUserAvatars] = useState([]);
@@ -14,21 +14,21 @@ function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
         try {
           const response = await axios.get(`${API_URL}/users`,  { headers : userHeaders });
           const users = response.data.data;
-          const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") 
-          && user.email !== userHeaders.uid);
-          // && user.email !== "ryan.kristopher.bartolome@gmail.com");
+          // const filteredUsers = users.filter(user => !user.email.toLowerCase().includes("test") 
+          // && user.email !== userHeaders.uid);
+          const filteredUsers = users.filter(user => user.email !== userHeaders.uid);
+          
           setUserList(filteredUsers);
           setLocalUserList(filteredUsers);
           
           const avatars = filteredUsers.map(user => {
-            return `https://robohash.org/${user.email}.png?set=set4`; // Unique avatar URL
+            return `https://robohash.org/${user.email}.png?set=set4`; 
           });
           setUserAvatars(avatars);
           setLocalUserAvatars(avatars);
           
-          //get user's objects (need to filter our empty objects)
           for (const user of users) {
-            const receiverId = user.id; // Get the id of each user
+            const receiverId = user.id; 
             try {
               const messagesResponse = await axios.get(
                 `${API_URL}/messages?receiver_id=${receiverId}&receiver_class=User`,{ headers : userHeaders }
@@ -53,12 +53,14 @@ function DirectMessages({ setReceiver,setInbox,setUserList,setUserAvatars }) {
     useEffect(() => { 
       if(userList.length === 0) {
         getUsers();
-        }
       }
-    );
+    }
+  );
       
     const handleReceiver = (id) => {
-      setReceiver(id); // update the receiver in the parent component
+      setReceiver(id); 
+      setSelectedTab("primary");
+      console.log("setReceiver(id) in DM: ", id)
     };
         
     return (

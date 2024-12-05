@@ -6,7 +6,7 @@ import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 
-function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars, channelMembers }) {
+function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars, channelMembers, setSelectedTab, setReceiver }) {
   console.log("Channel name in ChatWindow:", channelName);
   console.log("Props in ChatWindow - ChannelName:", channelName);
   console.log("Props in ChatWindow - Receiver:", receiver);
@@ -82,7 +82,7 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
 
      let response;
       
-     response = selectedTab === "primary"
+     response = selectedTab === "primary" 
      ? await axios.post(`${API_URL}/messages`, messageInfo, { headers: userHeaders })
      : selectedTab === "channels"
      ? await axios.post(`${API_URL}/messages`, messageChannelInfo, { headers: userHeaders })
@@ -146,29 +146,31 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
     setIsMembersModalOpen(true);
   }
 
+  const handleDms = (userId) => {
+    setSelectedTab("primary");
+    setIsMembersModalOpen(false)
+    setReceiver(userId);
+  }
+
+
  return (
     <div className="chat-window">
-      
-      {selectedTab === "primary" && (
+      { selectedTab === "primary"  && (
         <div className="primary-chat-container">
           <div className="name-display">
           {receiverAvatar ? (
-                    <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="primary-avatar" />
-                ) : null}
-                {receiverUser ? <span>{receiverUser.email}</span> : <span>Select a user or channel</span>}
-            
-        </div>
+            <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="primary-avatar" />
+            ) : null }
+            {receiverUser ? <span>{receiverUser.email}</span> 
+            : <span>Select a user or channel</span>}
+          </div>
         
         <div className="chat-messages">
           {mgaMessages.length > 0 ? (
             mgaMessages.map((msg) =>
               msg ? (
-                <div
-                  key={msg.id}
-                  className={`chat-bubble ${
-                    msg.sender?.id === receiver ? "receiver" : "sender"
-                  }`}
-                >
+                <div key={msg.id} 
+                  className={`chat-bubble ${msg.sender?.id === receiver ? "receiver" : "sender"}`}>
                   {msg.body}
                 </div>
               ) : null
@@ -238,62 +240,64 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
   </div>
 )}
 
-
-      {selectedTab === "archived" && (
-        <div className="archived-chat-container">
-          <div className="name-display">
-            <span>Archived Messages</span>
-          </div> 
-          <div className="chat-messages">
-            <div>No archived messages.</div>
-          </div>
-          <form className="chat-input" onSubmit={handleSend}>
-        <input
-          type="text"
-          placeholder="Type a message..."
-          autoComplete="off"
-          spellCheck="false"
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <button type="submit" className="send-button">
-          <BsSend />
-        </button>
-      </form>
-        </div>
-      )}
-  {isMembersModalOpen && (
-    <div className="modal-overlay" onClick={() => setIsMembersModalOpen(false)}>
-      <div className="members-container" onClick={(e) => e.stopPropagation()}>
-      <h3>{`#${channelName.name} members`}</h3>
-      {channelMembers && channelMembers.length > 0 ? (
-          channelMembers.map((member) => {
-            const matchedUser = userList.find((user) => user.id === member.user_id);
-            if (matchedUser) {
-              const avatarIndex = userList.findIndex((user) => user.id === matchedUser.id);
-              const avatar = avatarIndex !== -1 ? userAvatars[avatarIndex] : null;
-
-              return avatar ? (
-                <div key={member.id} className="avatar-container">
-                  <img src={avatar}
-                       alt={`${matchedUser.email}'s avatar`}
-                       className="members-avatar"
-                  />
-                  <div className="tooltip">
-                    {matchedUser.email || matchedUser.uid}
-                  </div>
-                </div>
-              ) : null;
-            }
-              return null;
-          })
-        ) : (
-          <span>Please select a channel</span>
-        )  
-        }     
-      </div>
+{selectedTab === "archived" && (
+  <div className="archived-chat-container">
+    <div className="name-display">
+      <span>Archived Messages</span>
+    </div> 
+    <div className="chat-messages">
+      <div>No archived messages.</div>
     </div>
-  )}
+    <form className="chat-input" onSubmit={handleSend}>
+      <input
+        type="text"
+        placeholder="Type a message..."
+        autoComplete="off"
+        spellCheck="false"
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
+      />
+      <button type="submit" className="send-button">
+        <BsSend />
+      </button>
+    </form>
+  </div>
+)}
+  
+{isMembersModalOpen && (
+  <div className="modal-overlay" onClick={() => setIsMembersModalOpen(false)}>
+    <div className="members-container" onClick={(e) => e.stopPropagation()}>
+    <h3>{`#${channelName.name} `}</h3>
+    {channelMembers && channelMembers.length > 0 ? (
+        channelMembers.map((member) => {
+          const matchedUser = userList.find((user) => user.id === member.user_id);
+          if (matchedUser) {
+            const avatarIndex = userList.findIndex((user) => user.id === matchedUser.id);
+            const avatar = avatarIndex !== -1 ? userAvatars[avatarIndex] : null;
+
+            return avatar ? (
+              <div key={member.id} className="avatar-container"
+              >
+                <img src={avatar}
+                      alt={`${matchedUser.email}'s avatar`}
+                      className="members-avatar"
+                      onClick={() => handleDms(matchedUser.id)}       
+                />
+                <div className="tooltip">
+                  {matchedUser.email || matchedUser.uid}
+                </div>
+              </div>
+            ) : null;
+          }
+            return null;
+        })
+      ) : (
+        <span>Please select a channel</span>
+      )  
+      }     
+    </div>
+  </div>
+)}
       
     </div>
   );

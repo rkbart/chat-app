@@ -1,4 +1,4 @@
-import "../NewChannel/NewChannel.css";
+import "./NewChannel.css";
 import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { useState } from "react";

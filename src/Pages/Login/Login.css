@@ -20,8 +20,6 @@
     margin-bottom: 5px;
 }
 
-/* Google & Apple button styling */
-
 .github-icon {
     width: 26px;
     height: auto;
@@ -73,7 +71,6 @@
     margin-bottom: 24px;
 }
 
-/* Login option separator styling */
 .login_form .separator span {
     background-color: #494c55;
     z-index: 1;
@@ -98,7 +95,6 @@ form .input_box label {
     margin-bottom: 8px;
 }
 
-/* Input field styling */
 form .input_box input {
     width: 100%;
     height: 50px;
@@ -139,7 +135,6 @@ a:hover {
     color:whitesmoke;
 }
 
-/* Login button styling */
 form button {
     width: 100%;
     height: 56px;

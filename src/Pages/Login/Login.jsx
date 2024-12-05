@@ -17,10 +17,9 @@ function Login({onLogin}) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignUp, setIsSignUp] = useState(false); 
     
-    const { handleHeaders } = useData();
+    const { handleHeaders, emailRegEx } = useData();
         
     const navigate = useNavigate();
-    const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
     const handleLogin = async (email, password) => {
         
