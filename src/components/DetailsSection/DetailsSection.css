@@ -71,9 +71,11 @@
 
  .channel-list-container {
   max-height: 350px;
-  overflow-y: auto; 
+  overflow-y:auto; 
   overflow-x: hidden;
   word-wrap: break-word; 
+  scrollbar-width: thin; 
+  scrollbar-color: #888 transparent;
 }
 
 .primary-container ul{
@@ -155,3 +157,4 @@
     background-color: rgba(0, 0, 0, 0.5); 
   }
 }
+

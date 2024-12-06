@@ -69,8 +69,8 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
 
   const handleAddUserClick = (e) => {
     e.preventDefault();
-      console.log(`array ng selectedUserIds: ${selectedUserIds}`)
-      console.log("selected Channel ito:", selectedChannel)
+      // console.log(`array ng selectedUserIds: ${selectedUserIds}`)
+      // console.log("selected Channel ito:", selectedChannel)
     setIsModalOpen(true); 
   };
 
@@ -94,9 +94,9 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
         `${API_URL}/channel/add_member`,info,{ headers: userHeaders }
       );}
       
-      alert("User added successfully!");
       setSelectedUserIds([]);
       setIsModalOpen(false); 
+      alert("User added successfully!");
     } catch (error) {
       console.error(error);
       return toast.error("Failed to add users.");

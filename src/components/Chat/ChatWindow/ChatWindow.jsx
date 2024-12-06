@@ -4,23 +4,32 @@ import { useState, useEffect, useRef } from "react";
 import { useData } from "../../../context/DataProvider.jsx";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { BsSend } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa";
+import { FaUsers, FaSmile } from "react-icons/fa";
 
-function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars, channelMembers, setSelectedTab, setReceiver }) {
-  console.log("Channel name in ChatWindow:", channelName);
-  console.log("Props in ChatWindow - ChannelName:", channelName);
-  console.log("Props in ChatWindow - Receiver:", receiver);
-  console.log("ChannelMembers in CHatWindow", channelMembers);
+function ChatWindow({ 
+  receiver, 
+  userList, 
+  channelName, 
+  selectedTab, 
+  userAvatars, 
+  channelMembers, 
+  setSelectedTab, 
+  setReceiver }) 
+  {
+  // console.log("Channel name in ChatWindow:", channelName);
+  // console.log("Props in ChatWindow - ChannelName:", channelName);
+  // console.log("Props in ChatWindow - Receiver:", receiver);
+  // console.log("ChannelMembers in CHatWindow", channelMembers);
   
+  const emojis = ["😀", "😂", "🥰", "😎", "😭", "👍", "🎉", "🔥", "💡", "💯"];
+  const [showEmojis, setShowEmojis] = useState(false);
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
   const [mgaMessages, setMgaMessages] = useState([]);
   const [mgaChannelMessages, setMgaChannelMessages] = useState([]);
-  
   const receiverIndex = userList.findIndex(user => user.id === receiver);
   const receiverAvatar = receiverIndex !== -1 ? userAvatars[receiverIndex] : null;
   const receiverUser = receiverIndex !== -1 ? userList[receiverIndex] : null;
-    
   const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
   
   useEffect(() => {
@@ -63,8 +72,15 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
       body: message.trim(),
       sender: { id: userHeaders.uid }, // Replace with your sender logic
   };
-    // Optimistically update the message list
-    setMgaMessages((prevMessages) => [...prevMessages, tempMessage]);
+   
+    if (selectedTab === "channels") {
+      // Optimistically update the channel's message list
+      setMgaChannelMessages((prevMessages) => [...prevMessages, tempMessage]);
+    } else if (selectedTab === "primary") {
+      // Optimistically update the DM message list
+      setMgaMessages((prevMessages) => [...prevMessages, tempMessage]);
+    }
+    console.log("mga Channel messages: ", mgaChannelMessages)
     setMessage(""); // Clear input field immediately
 
     try {
@@ -88,12 +104,11 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
      ? await axios.post(`${API_URL}/messages`, messageChannelInfo, { headers: userHeaders })
      : null
 
-      const { data } = response; // Destructure response (get data object)
+      const { data } = response; 
       if (data.data) {
         const newMessage = data.data;
 
-        // Replace the temporary message with the server response
-            setMgaMessages((prevMessages) =>
+          setMgaMessages((prevMessages) =>
                 prevMessages.map((msg) =>
                     msg.id === tempMessage.id ? newMessage : msg
                 )
@@ -101,11 +116,11 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
       }
 
       if (data.errors) {
-        console.log("Errors:", data.errors); // Handle potential errors
+        console.log("Errors:", data.errors); 
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      // Remove the temporary message if the API call fails
+      
       setMgaMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.id !== tempMessage.id)
     );
@@ -114,7 +129,7 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
 
   useEffect(()=>{
     if (!channelName) return;
-
+    
     const channelDetails = async () => {
     
       try {
@@ -132,13 +147,12 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
   },[channelName, userHeaders])
 
   const messagesEndRef = useRef(null);
-
-  // scroll to bottom of chat
+  
   const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
-  };
+    };
 
-  useEffect(() => {
+    useEffect(() => {
       scrollToBottom(); 
   }, [mgaMessages, mgaChannelMessages]); 
 
@@ -152,15 +166,43 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
     setReceiver(userId);
   }
 
+  const emojiPickerRef = useRef(null);
 
- return (
+
+  const handleToggleEmojis = (event) => {
+    event.stopPropagation(); // Prevent immediate document click
+    setShowEmojis((prev) => !prev);
+  };
+
+  const handleSelectEmoji = (emoji) => {
+    setMessage((prev) => prev + emoji); // Add emoji to message input
+  };
+
+  const handleOutsideClick = (event) => {
+    // Close emoji picker if clicked outside
+    if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+      setShowEmojis(false);
+    }
+  };
+
+  useEffect(() => {
+    // Attach the event listener
+    document.addEventListener("click", handleOutsideClick);
+    
+    return () => {
+      // Clean up event listener on unmount
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+  
+  return (
     <div className="chat-window">
       { selectedTab === "primary"  && (
         <div className="primary-chat-container">
           <div className="name-display">
           {receiverAvatar ? (
             <img src={receiverAvatar} alt={`${receiverUser.email}'s avatar`} className="primary-avatar" />
-            ) : null }
+          ) : null }
             {receiverUser ? <span>{receiverUser.email}</span> 
             : <span>Select a user or channel</span>}
           </div>
@@ -181,18 +223,36 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
           <div ref={messagesEndRef} />
         </div>
         <form className="chat-input" onSubmit={handleSend}>
-        <input
-          type="text"
-          placeholder="Type a message..."
-          autoComplete="off"
-          spellCheck="false"
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
+  <input
+    type="text"
+    placeholder="Type a message..."
+    autoComplete="off"
+    spellCheck="false"
+    value={message}
+    onChange={(event) => setMessage(event.target.value)}
+  />
+   {/* Emoji Picker */}
+   {showEmojis && (
+          <div className="emoji-picker" ref={emojiPickerRef}>
+            {emojis.map((emoji, index) => (
+              <span
+                key={index}
+                className="emoji"
+                onClick={() => handleSelectEmoji(emoji)}
+              >
+                {emoji}
+              </span>
+            ))}
+          </div>
+        )}
+        <FaSmile
+          className="smiley-button"
+          onClick={handleToggleEmojis} // Toggle emoji picker visibility
         />
-        <button type="submit" className="send-button">
-          <BsSend />
-        </button>
-      </form>
+  <button type="submit" className="send-button">
+    <BsSend />
+  </button>
+</form>
         </div>
       )}
 
@@ -214,7 +274,7 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
                 msg.sender?.uid === userHeaders.uid ? "sender" : "receiver"
               }`}
             >
-              {<strong>{msg.sender.uid.split("@")[0]}: </strong>}
+              {<strong>{msg.sender.uid}: </strong>}
               {msg.body}
             </div>
           ) : null
@@ -233,6 +293,24 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
+      {/* Emoji Picker */}
+   {showEmojis && (
+          <div className="emoji-picker" ref={emojiPickerRef}>
+            {emojis.map((emoji, index) => (
+              <span
+                key={index}
+                className="emoji"
+                onClick={() => handleSelectEmoji(emoji)}
+              >
+                {emoji}
+              </span>
+            ))}
+          </div>
+        )}
+        <FaSmile
+          className="smiley-button"
+          onClick={handleToggleEmojis} 
+        />
       <button type="submit" className="send-button">
         <BsSend />
       </button>
@@ -257,6 +335,24 @@ function ChatWindow({ receiver, userList, channelName, selectedTab, userAvatars,
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
+      {/* Emoji Picker */}
+   {showEmojis && (
+          <div className="emoji-picker" ref={emojiPickerRef}>
+            {emojis.map((emoji, index) => (
+              <span
+                key={index}
+                className="emoji"
+                onClick={() => handleSelectEmoji(emoji)}
+              >
+                {emoji}
+              </span>
+            ))}
+          </div>
+        )}
+        <FaSmile
+          className="smiley-button"
+          onClick={handleToggleEmojis} // Toggle emoji picker visibility
+        />
       <button type="submit" className="send-button">
         <BsSend />
       </button>

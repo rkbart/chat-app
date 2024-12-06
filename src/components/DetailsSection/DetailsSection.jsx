@@ -1,13 +1,21 @@
 import "./DetailsSection.css";
 import { MdPlaylistAdd } from "react-icons/md";
 import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
 import { useData } from "../../context/DataProvider.jsx";
-// import DataProvider from "../../context/DataProvider.jsx";
 
-function DetailsSection({ selectedTab, setSelectedTab, onChannelSelect, inbox, onInboxSelect, userList, setChannelMembers, channelMembers }) 
+function DetailsSection({ 
+  selectedTab, 
+  setSelectedTab, 
+  onChannelSelect, 
+  inbox, 
+  onInboxSelect, 
+  userList, 
+  setChannelMembers, 
+  channelMembers }) 
 {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addUser,setAddUser] = useState(false);
   const { userHeaders } = useData();
@@ -18,25 +26,25 @@ function DetailsSection({ selectedTab, setSelectedTab, onChannelSelect, inbox, o
 
   const handleInboxClick = (senderId) => {
     if (onInboxSelect) {
-      onInboxSelect(senderId);  // Pass selected senderId to parent
+      onInboxSelect(senderId);  
     }
   };
 
   const handleChannelClick = (channel) => {
     console.log("Channel name passed to DetailsSection:", channel);
     if (onChannelSelect) {
-      onChannelSelect(channel); // Pass the selected channel's name
+      onChannelSelect(channel); 
     }
   };
 
   const handleAddChannelClick = () => {
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); 
     setAddUser(true)
     console.log(addUser)
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false); 
   };
 
   const getLatestMessages = (inbox) => {
@@ -46,9 +54,9 @@ function DetailsSection({ selectedTab, setSelectedTab, onChannelSelect, inbox, o
     const latestMessagesMap = new Map();
   
     sortedInbox.forEach((message) => {
-      // Exclude messages sent by the current user to themselves
+      
       if (
-        message?.sender?.uid !== userHeaders.id && // Exclude self-sent messages
+        message?.sender?.uid !== userHeaders.id && // exclude self-sent messages
         message?.sender?.id && 
         !latestMessagesMap.has(message.sender.id)
       ) {
@@ -130,7 +138,7 @@ function DetailsSection({ selectedTab, setSelectedTab, onChannelSelect, inbox, o
           <h4>No Archives found.</h4>
         </div>
       )}
-      {/* Render the modal */}
+      
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

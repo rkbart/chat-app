@@ -240,3 +240,39 @@
   visibility: visible;
   /* z-index: 1001; */
 }
+
+.smiley-button {
+  margin-right: 5px;
+  color: rgb(255, 208, 0);
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.smiley-button:hover {
+  color: rgba(255, 208, 0, 0.918);
+}
+
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  background: #494c55;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  right: 130px;
+  bottom: 105px; 
+  width: 120px;
+}
+
+.emoji {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.emoji:hover {
+  transform: scale(1.2);
+}
