@@ -16,12 +16,8 @@ function ChatWindow({
   setSelectedTab, 
   setReceiver }) 
   {
-  // console.log("Channel name in ChatWindow:", channelName);
-  // console.log("Props in ChatWindow - ChannelName:", channelName);
-  // console.log("Props in ChatWindow - Receiver:", receiver);
-  // console.log("ChannelMembers in CHatWindow", channelMembers);
-  
-  const emojis = ["😀", "😂", "🥰", "😎", "😭", "👍", "🎉", "🔥", "💡", "💯"];
+ 
+  const emojis = ["😀", "😂", "🥰", "😎", "😭", "👍", "🎉", "🔥", "💡", "💯", "🖕"];
   const [showEmojis, setShowEmojis] = useState(false);
   const { userHeaders } = useData();
   const [message, setMessage] = useState("");
@@ -64,24 +60,22 @@ function ChatWindow({
 
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return; // Prevent sending empty or whitespace-only messages
+    if (!message.trim()) return; 
 
-    // Create a temporary message with a unique ID
     const tempMessage = {
-      id: `temp-${Date.now()}`, // Temporary unique ID
+      id: `temp-${Date.now()}`, 
       body: message.trim(),
-      sender: { id: userHeaders.uid }, // Replace with your sender logic
+      sender: { id: userHeaders.uid }, 
   };
    
+  // Optimistically update the channel's/DM's message list
     if (selectedTab === "channels") {
-      // Optimistically update the channel's message list
       setMgaChannelMessages((prevMessages) => [...prevMessages, tempMessage]);
     } else if (selectedTab === "primary") {
-      // Optimistically update the DM message list
-      setMgaMessages((prevMessages) => [...prevMessages, tempMessage]);
+     setMgaMessages((prevMessages) => [...prevMessages, tempMessage]);
     }
     console.log("mga Channel messages: ", mgaChannelMessages)
-    setMessage(""); // Clear input field immediately
+    setMessage(""); 
 
     try {
       const messageInfo = {
@@ -170,27 +164,24 @@ function ChatWindow({
 
 
   const handleToggleEmojis = (event) => {
-    event.stopPropagation(); // Prevent immediate document click
+    event.stopPropagation(); // prevent immediate document click
     setShowEmojis((prev) => !prev);
   };
 
   const handleSelectEmoji = (emoji) => {
-    setMessage((prev) => prev + emoji); // Add emoji to message input
+    setMessage((prev) => prev + emoji); 
   };
 
   const handleOutsideClick = (event) => {
-    // Close emoji picker if clicked outside
     if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
       setShowEmojis(false);
     }
   };
 
   useEffect(() => {
-    // Attach the event listener
     document.addEventListener("click", handleOutsideClick);
     
     return () => {
-      // Clean up event listener on unmount
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
@@ -231,7 +222,6 @@ function ChatWindow({
     value={message}
     onChange={(event) => setMessage(event.target.value)}
   />
-   {/* Emoji Picker */}
    {showEmojis && (
           <div className="emoji-picker" ref={emojiPickerRef}>
             {emojis.map((emoji, index) => (
@@ -247,7 +237,7 @@ function ChatWindow({
         )}
         <FaSmile
           className="smiley-button"
-          onClick={handleToggleEmojis} // Toggle emoji picker visibility
+          onClick={handleToggleEmojis} 
         />
   <button type="submit" className="send-button">
     <BsSend />
@@ -293,8 +283,7 @@ function ChatWindow({
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
-      {/* Emoji Picker */}
-   {showEmojis && (
+    {showEmojis && (
           <div className="emoji-picker" ref={emojiPickerRef}>
             {emojis.map((emoji, index) => (
               <span
@@ -335,8 +324,7 @@ function ChatWindow({
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
-      {/* Emoji Picker */}
-   {showEmojis && (
+    {showEmojis && (
           <div className="emoji-picker" ref={emojiPickerRef}>
             {emojis.map((emoji, index) => (
               <span
@@ -351,7 +339,7 @@ function ChatWindow({
         )}
         <FaSmile
           className="smiley-button"
-          onClick={handleToggleEmojis} // Toggle emoji picker visibility
+          onClick={handleToggleEmojis}  
         />
       <button type="submit" className="send-button">
         <BsSend />

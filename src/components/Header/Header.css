@@ -33,15 +33,27 @@ margin-right: 8px;
     /* border: 1px solid black; */
 }
 
+.chat-header span h2 {
+    user-select: none;
+}
+
 .logout {
-    width: 32px;
-    height: auto;
-    margin-right: 5px;
+width: 32px;
+height: auto;
+margin-right: 5px;
   }
 
-  .logout-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+.logout-container {
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+}
+
+.logout-container:hover {
+    color:hsla(0, 0%, 96%, 0.9);
+}
+
+.logout-container h4 {
+    user-select: none;
+}
