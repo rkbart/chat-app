@@ -1,29 +1,25 @@
 import "./Header.css";
 import { TbLogout2 } from "react-icons/tb";
-import {useData} from "../../context/DataProvider.jsx";
-import {useNavigate} from "react-router-dom";
 
-function Header() {
-  const { userHeaders } = useData();
+function Header({headerTitle,handleLogout}) {
   const headerAvatar = "https://robohash.org/${userHeader.uid}.png?set=set4"
-  const navigate = useNavigate();
+  
 
-  const handleLogout = () => {
-    navigate('/');
-  };
-
-  return(
+return(
         <header className="chat-header">
         <span>
           <img src={headerAvatar}/>
-          <h2>{`Hi, ${userHeaders.uid.split("@")[0]}`}</h2>
+          
+          <h2 data-testid="title">{`Hi, ${headerTitle}`}</h2>
         </span>
         
+        {/* <a href= "/" > */}
         <div className="logout-container"
             onClick={handleLogout}>
         <TbLogout2 className="logout" />
-        <h4>Log out</h4>
+        <h4 data-testid="logout">Log out</h4>
         </div>
+        {/* </a> */}
       
       </header>
     )

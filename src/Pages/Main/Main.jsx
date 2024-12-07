@@ -3,9 +3,13 @@ import Sidebar from "../../components/SideBar/Sidebar.jsx";
 import ChatWindow from "../../components/Chat/ChatWindow/ChatWindow.jsx";
 import DetailsSection from "../../components/DetailsSection/DetailsSection.jsx";
 import Header from "../../components/Header/Header.jsx";
+import {useData} from "../../context/DataProvider.jsx";
+import {useNavigate} from "react-router-dom";
 import "./Main.css";
 
 function Main() {
+  const { userHeaders } = useData();
+  const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
   const [chatRoom, setChatRoom] = useState("Select a channel");
   const [receiver, setReceiver] = useState(null);
@@ -14,6 +18,8 @@ function Main() {
   const [selectedTab, setSelectedTab] = useState("primary");
   const [userAvatars, setUserAvatars] = useState([]);
   const [channelMembers, setChannelMembers] = useState([]);
+  const headerTitle = userHeaders.uid.split("@")[0];
+  
  
   const handleChatRoom = (channel) => {
     setChatRoom(channel);
@@ -26,6 +32,11 @@ function Main() {
   const handleChannelSelect = (selectedChannelName) => {
     console.log("Channel name received in Main:", selectedChannelName)
     setChannelName(selectedChannelName); // Update receiver to the clicked channel's name
+  };
+
+  const handleLogout = () => {
+    navigate('/');
+    localStorage.clear();
   };
 
   return (
@@ -44,7 +55,9 @@ function Main() {
       <div className="main-pos">
         <Header 
           className="chat-header" 
-          chatRoom={chatRoom}/>
+          chatRoom={chatRoom}
+          headerTitle={headerTitle}
+          handleLogout={handleLogout}/>
 
         <div className="details-chat">
           <DetailsSection inbox={inbox} 
