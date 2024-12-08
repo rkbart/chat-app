@@ -1,7 +1,7 @@
 import "./DetailsSection.css";
 import { MdPlaylistAdd } from "react-icons/md";
 import ChannelList from "../Chat/ChannelList/ChannelList.jsx";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import NewChannel from "../../components/Chat/NewChannel/NewChannel.jsx"
 import { useData } from "../../context/DataProvider.jsx";
 

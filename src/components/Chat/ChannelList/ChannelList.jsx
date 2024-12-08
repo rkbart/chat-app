@@ -8,7 +8,13 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannelMembers, channelMembers}) {
+function ChannelList({
+    onChannelSelect, 
+    addUser, 
+    setAddUser, 
+    userList, 
+    setChannelMembers}) 
+  {
  
   const { userHeaders } = useData();
   const [channelsList, setChannelsList] = useState([]);
@@ -37,7 +43,7 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
     if(channelsList.length === 0) {
       getChannels();
       }
-    },[]
+    }
   );
   
   function handleCancel() {
@@ -69,16 +75,14 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
 
   const handleAddUserClick = (e) => {
     e.preventDefault();
-      // console.log(`array ng selectedUserIds: ${selectedUserIds}`)
-      // console.log("selected Channel ito:", selectedChannel)
     setIsModalOpen(true); 
   };
 
   const handleCheckboxChange = (userId) => {
     setSelectedUserIds((prevSelected) =>
       prevSelected.includes(userId)
-        ? prevSelected.filter((id) => id !== userId) // unselect if already selected
-        : [...prevSelected, userId] // select new user
+        ? prevSelected.filter((id) => id !== userId) 
+        : [...prevSelected, userId]
     );
   };
 
@@ -124,7 +128,10 @@ function ChannelList({onChannelSelect, addUser, setAddUser, userList, setChannel
       </ul>
 
       {addChannelVisible && (
-        <NewChannel onCancel={handleCancel} addUser={addUser} setAddUser={setAddUser} />
+        <NewChannel onCancel={handleCancel} 
+                    addUser={addUser} 
+                    setAddUser={setAddUser} 
+                    />
       )}
 
       {/* Add User Modal */}

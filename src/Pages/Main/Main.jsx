@@ -19,6 +19,8 @@ function Main() {
   const [userAvatars, setUserAvatars] = useState([]);
   const [channelMembers, setChannelMembers] = useState([]);
   const headerTitle = userHeaders.uid.split("@")[0];
+  const headerAvatar = `https://robohash.org/${userHeaders.uid}.png?set=set4`
+  const [searchTerm, setSearchTerm] = useState("");
   
  
   const handleChatRoom = (channel) => {
@@ -50,6 +52,8 @@ function Main() {
         setUserAvatars={setUserAvatars}
         setSelectedTab={setSelectedTab}
         channelMembers={channelMembers}
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm}
         />
 
       <div className="main-pos">
@@ -57,7 +61,8 @@ function Main() {
           className="chat-header" 
           chatRoom={chatRoom}
           headerTitle={headerTitle}
-          handleLogout={handleLogout}/>
+          handleLogout={handleLogout}
+          headerAvatar={headerAvatar}/>
 
         <div className="details-chat">
           <DetailsSection inbox={inbox} 
@@ -67,7 +72,6 @@ function Main() {
                           setSelectedTab={setSelectedTab}
                           userList={userList}
                           setChannelMembers={setChannelMembers}
-                          
                           />
           <ChatWindow receiver={receiver} 
                       userList={userList} 

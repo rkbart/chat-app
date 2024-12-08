@@ -2,7 +2,7 @@ import "./Sidebar.css";
 import DirectMessages from "../Chat/DirectMessages/DirectMessages.jsx";
 import { RiContactsBook3Line } from "react-icons/ri";
 
-function Sidebar({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab }) {
+function Sidebar({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab, searchTerm, setSearchTerm }) {
 
  return (
     <div className="sidebar">
@@ -18,6 +18,8 @@ function Sidebar({ setReceiver, setInbox, setUserList, setUserAvatars, setSelect
         setUserList={setUserList}
         setUserAvatars={setUserAvatars}
         setSelectedTab={setSelectedTab}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
         />
      
     </div>

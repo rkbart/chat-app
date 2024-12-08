@@ -4,15 +4,20 @@ import axios from "axios";
 import { useState } from "react";
 import { API_URL } from "../../../constants/Constants.jsx";
 
-function NewChannel({  onCancel, addUser, setAddUser, userList }) {
+
+function NewChannel({ 
+    onCancel, 
+    addUser, 
+    userList 
+    }) 
+{
+ 
   const { idHolder } = useData();
   const [channelName, setChannelName] = useState("");
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const { userHeaders } = useData();
   
-  // const [userIds, setUserIds] = useState([]);
-
-  const handleAdd = async (e) => {
+   const handleAdd = async (e) => {
     e.preventDefault();
 
     if (channelName.trim()) {

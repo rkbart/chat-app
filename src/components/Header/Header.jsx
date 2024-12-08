@@ -1,13 +1,13 @@
 import "./Header.css";
 import { TbLogout2 } from "react-icons/tb";
 
-function Header({headerTitle,handleLogout}) {
-  const headerAvatar = "https://robohash.org/${userHeader.uid}.png?set=set4"
+function Header({headerTitle,handleLogout,headerAvatar}) {
+  
 
 return(
   <div className="chat-header">
     <span>
-      <img src={headerAvatar}/>
+      <img src={headerAvatar} alt="avatar"/>
       <h2 data-testid="title">{`Hi, ${headerTitle}`}</h2>
     </span>
         

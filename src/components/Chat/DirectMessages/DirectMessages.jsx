@@ -5,11 +5,19 @@ import axios from "axios";
 import { API_URL } from "../../../constants/Constants.jsx";
 import { IoIosSearch } from "react-icons/io";
 
-function DirectMessages({ setReceiver, setInbox, setUserList, setUserAvatars, setSelectedTab }) {
+function DirectMessages({ 
+  setReceiver, 
+  setInbox, 
+  setUserList, 
+  setUserAvatars, 
+  setSelectedTab, 
+  searchTerm, 
+  setSearchTerm }) 
+  {
     const { userHeaders } = useData();
     const [userList, setLocalUserList] = useState([]);
     const [localUserAvatars, setLocalUserAvatars] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    // const [searchTerm, setSearchTerm] = useState("");
     
     const getUsers = async () => {
 
