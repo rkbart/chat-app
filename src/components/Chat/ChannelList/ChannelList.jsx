@@ -7,6 +7,8 @@ import { API_URL } from "../../../constants/Constants.jsx";
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { IoIosSearch } from "react-icons/io";
+
 
 function ChannelList({
     onChannelSelect, 
@@ -22,6 +24,11 @@ function ChannelList({
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const filteredUsers = userList.filter(user =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   
   const getChannels = async () => {
 
@@ -100,11 +107,11 @@ function ChannelList({
       
       setSelectedUserIds([]);
       setIsModalOpen(false); 
-      alert("User added successfully!");
     } catch (error) {
       console.error(error);
       return toast.error("Failed to add users.");
     }
+    alert("User added successfully!");
   };
   
   return (
@@ -152,7 +159,7 @@ function ChannelList({
           Select All
         </label>
             <ul className="user-list">
-              {userList.map((individual) => {
+              {filteredUsers.map((individual) => {
                 const { id, email } = individual;
                 const username = email.split("@")[0];
                 return (
@@ -173,6 +180,16 @@ function ChannelList({
             <div className="buttons">
               <button onClick={handleSaveUsers}>Save</button>
               <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+              <div className="search-bar-container">
+              <IoIosSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search Users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-bar"
+              />
+            </div>
             </div>
           </div>
         </div>

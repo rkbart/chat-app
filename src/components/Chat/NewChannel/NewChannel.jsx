@@ -3,6 +3,7 @@ import { useData } from "../../../context/DataProvider.jsx";
 import axios from "axios";
 import { useState } from "react";
 import { API_URL } from "../../../constants/Constants.jsx";
+import { IoIosSearch } from "react-icons/io";
 
 
 function NewChannel({ 
@@ -16,6 +17,11 @@ function NewChannel({
   const [channelName, setChannelName] = useState("");
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const { userHeaders } = useData();
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const filteredUsers = userList.filter(user =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   
    const handleAdd = async (e) => {
     e.preventDefault();
@@ -77,6 +83,16 @@ function NewChannel({
         <button>Save Channel</button>
       </div>
     </form>
+    <div className="search-bar-container">
+      <IoIosSearch className="search-icon" />
+      <input
+        type="text"
+        placeholder="Search Users..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-bar"
+      />
+    </div>
         {addUser && (
         <div className="select-user-container">
           <div className="header-with-select-all">
@@ -90,8 +106,9 @@ function NewChannel({
               Select All
             </label>
           </div>
+          
           <ul className="user-list">
-            {userList.map((individual) => {
+            {filteredUsers.map((individual) => {
               const { id, email } = individual;
               const username = email.split("@")[0];
               return (
@@ -108,6 +125,7 @@ function NewChannel({
                 </li>
               );
             })}
+            
           </ul>
         </div>
       )}

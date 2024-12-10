@@ -152,4 +152,12 @@ align-items: flex-start;
     background-color: hsl(225, 100%, 50%);
   }
 
-  
+  .search-bar-container {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
+    margin-left: 8px;
+    /* width: 300px; */
+  }
